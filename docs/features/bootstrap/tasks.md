@@ -36,7 +36,7 @@
 
 ### T-04: Implementar hook useInstallBanner
 
-- [ ] Criar o hook React `useInstallBanner` na camada de apresentação. O hook deve instanciar `SerwistServiceWorkerAdapter` e `SessionStorageAdapter`, criar o `InstallBannerUseCase` com essas dependências, e expor `showBanner`, `onInstall` e `onDismiss` tipados para consumo pelo componente `InstallBanner`.
+- [x] Criar o hook React `useInstallBanner` na camada de apresentação. O hook deve instanciar `SerwistServiceWorkerAdapter` e `SessionStorageAdapter`, criar o `InstallBannerUseCase` com essas dependências, e expor `showBanner`, `onInstall` e `onDismiss` tipados para consumo pelo componente `InstallBanner`.
 
 **Rastreabilidade:** REQ-1 · REQ-2
 **Depende de:** T-02 · T-03 · T-09
@@ -98,7 +98,7 @@
 
 ### T-09: Criar e configurar public/manifest.json
 
-- [ ] Criar o arquivo `public/manifest.json` com os campos obrigatórios para PWA: `name`, `short_name`, `display: "standalone"`, `start_url: "/"`, `theme_color`, `background_color` e array de `icons` com ícones em 192px e 512px. Os valores de `theme_color` e `background_color` devem usar tokens do design system definidos em `docs/design-system/`.
+- [x] Criar o arquivo `public/manifest.json` com os campos obrigatórios para PWA: `name`, `short_name`, `display: "standalone"`, `start_url: "/"`, `theme_color`, `background_color` e array de `icons` com ícones em 192px e 512px. Os valores de `theme_color` e `background_color` devem usar tokens do design system definidos em `docs/design-system/`.
 
 **Rastreabilidade:** REQ-4 · REQ-22
 **Depende de:** —
