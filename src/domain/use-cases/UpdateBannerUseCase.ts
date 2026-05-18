@@ -22,6 +22,22 @@ export class UpdateBannerUseCase {
   ) {}
 
   /**
+   * Registra um callback que é acionado quando o port detecta uma nova versão
+   * disponível. O evento é suprimido (callback não é chamado) se a flag
+   * `updateBannerDismissed` estiver ativa na sessão corrente.
+   *
+   * Rastreabilidade: REQ-7 · REQ-11
+   */
+  onUpdateAvailable(callback: () => void): void {
+    this.updatePort.onUpdateAvailable(() => {
+      const dismissed = this.sessionPort.getFlag(UPDATE_BANNER_DISMISSED_KEY);
+      if (!dismissed) {
+        callback();
+      }
+    });
+  }
+
+  /**
    * Determina se o banner de atualização deve ser exibido.
    *
    * Retorna `true` somente quando:

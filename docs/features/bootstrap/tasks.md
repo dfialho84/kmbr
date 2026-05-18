@@ -212,7 +212,7 @@
 
 ### T-17: Implementar UpdateBannerUseCase.onUpdateAvailable()
 
-- [ ] Criar o método `onUpdateAvailable()` no `UpdateBannerUseCase`. O método deve registrar um callback que é acionado quando `IUpdatePort.onUpdateAvailable()` dispara. Quando a flag `updateBannerDismissed` for `false`, o caso de uso deve propagar o evento; quando for `true`, deve suprimi-lo.
+- [x] Criar o método `onUpdateAvailable()` no `UpdateBannerUseCase`. O método deve registrar um callback que é acionado quando `IUpdatePort.onUpdateAvailable()` dispara. Quando a flag `updateBannerDismissed` for `false`, o caso de uso deve propagar o evento; quando for `true`, deve suprimi-lo.
 
 **Rastreabilidade:** REQ-7 · REQ-11
 **Depende de:** T-01 · T-15
