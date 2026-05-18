@@ -192,7 +192,7 @@
 
 ### T-15: Definir interfaces IUpdatePort
 
-- [ ] Criar a interface TypeScript `IUpdatePort` na camada Domain. Deve declarar `getUpdateReadiness(): UpdateReadiness`, `onUpdateAvailable(callback: () => void): void` e `activateUpdate(): Promise<void>`. Criar também o tipo `UpdateReadiness` com campos `status: 'idle' | 'available' | 'activating'` e `waitingSW: ServiceWorker | null`.
+- [x] Criar a interface TypeScript `IUpdatePort` na camada Domain. Deve declarar `getUpdateReadiness(): UpdateReadiness`, `onUpdateAvailable(callback: () => void): void` e `activateUpdate(): Promise<void>`. Criar também o tipo `UpdateReadiness` com campos `status: 'idle' | 'available' | 'activating'` e `waitingSW: ServiceWorker | null`.
 
 **Rastreabilidade:** REQ-7 · REQ-9 · REQ-13 · REQ-15 · REQ-16
 **Depende de:** —
