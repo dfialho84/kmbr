@@ -222,7 +222,7 @@
 
 ### T-18: Implementar SerwistServiceWorkerAdapter — detecção de SW waiting e notificação
 
-- [ ] Adicionar ao `SerwistServiceWorkerAdapter` a lógica de detecção de Service Worker em estado `waiting`. O adapter deve escutar o evento de atualização do SW, atualizar `UpdateReadiness.status = 'available'`, armazenar a referência ao SW em waiting e notificar todos os callbacks registrados via `onUpdateAvailable()`.
+- [x] Adicionar ao `SerwistServiceWorkerAdapter` a lógica de detecção de Service Worker em estado `waiting`. O adapter deve escutar o evento de atualização do SW, atualizar `UpdateReadiness.status = 'available'`, armazenar a referência ao SW em waiting e notificar todos os callbacks registrados via `onUpdateAvailable()`.
 
 **Rastreabilidade:** REQ-7 · REQ-13 · REQ-15 · REQ-16
 **Depende de:** T-03 · T-15
