@@ -252,7 +252,7 @@
 
 ### T-21: Cobrir UT-4 — UpdateBannerUseCase.shouldShowBanner()
 
-- [ ] Implementar os testes unitários `UT-4` cobrindo os três casos de `shouldShowBanner()` do `UpdateBannerUseCase`. Usar mocks de `IUpdatePort` e `ISessionPort`.
+- [x] Implementar os testes unitários `UT-4` cobrindo os três casos de `shouldShowBanner()` do `UpdateBannerUseCase`. Usar mocks de `IUpdatePort` e `ISessionPort`.
 
 **Rastreabilidade:** REQ-7 · REQ-8 · REQ-11 · REQ-12
 **Depende de:** T-16
@@ -262,7 +262,7 @@
 
 ### T-22: Cobrir UT-7 — UpdateBannerUseCase.onUpdateAvailable()
 
-- [ ] Implementar os testes unitários `UT-7` cobrindo os três casos de `onUpdateAvailable()`: callback chamado quando port dispara, evento propagado com flag false, evento suprimido com flag true.
+- [x] Implementar os testes unitários `UT-7` cobrindo os três casos de `onUpdateAvailable()`: callback chamado quando port dispara, evento propagado com flag false, evento suprimido com flag true.
 
 **Rastreabilidade:** REQ-7 · REQ-11
 **Depende de:** T-17
@@ -272,7 +272,7 @@
 
 ### T-23: Cobrir GH-3 — Scenario "App detecta nova versão e exibe banner de atualização"
 
-- [ ] Implementar o teste E2E Gherkin `GH-3` cobrindo todos os steps do Scenario "App detecta nova versão e exibe banner de atualização". O setup deve configurar `navigator.serviceWorker` com SW em `waiting`, ausência de `updateBannerDismissed` na sessionStorage, e verificar que `UpdateBanner` está visível com os dois botões e que o conteúdo principal da aplicação está renderizado simultaneamente.
+- [x] Implementar o teste E2E Gherkin `GH-3` cobrindo todos os steps do Scenario "App detecta nova versão e exibe banner de atualização". O setup deve configurar `navigator.serviceWorker` com SW em `waiting`, ausência de `updateBannerDismissed` na sessionStorage, e verificar que `UpdateBanner` está visível com os dois botões e que o conteúdo principal da aplicação está renderizado simultaneamente.
 
 **Rastreabilidade:** REQ-7 · REQ-8 · Scenario: "App detecta nova versão e exibe banner de atualização"
 **Depende de:** T-20
