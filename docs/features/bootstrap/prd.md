@@ -30,13 +30,13 @@ Motoristas e taxistas acessando o app via navegador mobile (Android e iOS). Todo
 
 ## Critérios de Sucesso
 
-| Critério                                              | Medida                                        |
-| ----------------------------------------------------- | --------------------------------------------- |
-| App é instalável como PWA                            | Disponível em standalone mode em Android/iOS |
+| Critério                                             | Medida                                          |
+| ---------------------------------------------------- | ----------------------------------------------- |
+| App é instalável como PWA                            | Disponível em standalone mode em Android/iOS    |
 | Atualização automática funciona em background        | Versão mais recente carregada na próxima sessão |
-| Banner de atualização é exibido quando há novo build | "Atualizar agora" ou "Depois" disponíveis    |
-| App funciona offline                                 | 95%+ das funcionalidades críticas sem rede   |
-| Cache de assets reduz tempo de inicialização         | < 3 segundos para inicialização completa     |
+| Banner de atualização é exibido quando há novo build | "Atualizar agora" ou "Depois" disponíveis       |
+| App funciona offline                                 | 95%+ das funcionalidades críticas sem rede      |
+| Cache de assets reduz tempo de inicialização         | < 3 segundos para inicialização completa        |
 
 ---
 
@@ -54,7 +54,7 @@ Motoristas e taxistas acessando o app via navegador mobile (Android e iOS). Todo
 ## Fluxo Principal
 
 ```mermaid
-flowchart LR
+flowchart TD
     A([Usuário acessa<br/>a aplicação]) --> B[Browser detecta<br/>PWA support]
     B --> C{PWA já<br/>instalado?}
     C -->|Não| D[Banner oferece<br/>instalação]
@@ -126,11 +126,10 @@ flowchart LR
 
 ## Riscos
 
-| Risco                                                                      | Mitigação                                                                           |
-| -------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
-| Navegador do usuário não suporta PWA                                       | Implementar fallback para web app tradicional; banner de instalação não aparece     |
+| Risco                                                                         | Mitigação                                                                           |
+| ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| Navegador do usuário não suporta PWA                                          | Implementar fallback para web app tradicional; banner de instalação não aparece     |
 | Erro ao baixar atualização de versão (rede instável ou servidor indisponível) | Manter versão anterior ativa; tentar novamente na próxima sessão do usuário         |
-| Cache obsoleto permite usuário continuar com versão desatualizada          | Validar versão em cada inicialização; versioning no manifest e invalidação de cache |
-| Tamanho de cache cresce indefinidamente afetando storage do dispositivo    | Definir limite de tamanho de cache; limpeza automática de assets antigos             |
-| Usuário ignora banner "Atualizar agora" e continua com versão antiga      | Banner reaparece a cada nova sessão até que o usuário clique "Atualizar agora"     |
-
+| Cache obsoleto permite usuário continuar com versão desatualizada             | Validar versão em cada inicialização; versioning no manifest e invalidação de cache |
+| Tamanho de cache cresce indefinidamente afetando storage do dispositivo       | Definir limite de tamanho de cache; limpeza automática de assets antigos            |
+| Usuário ignora banner "Atualizar agora" e continua com versão antiga          | Banner reaparece a cada nova sessão até que o usuário clique "Atualizar agora"      |
