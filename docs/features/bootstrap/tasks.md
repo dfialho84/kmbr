@@ -394,7 +394,7 @@ _Coberto por T-25 (activateUpdate preserva sessão via cookie/token existente) e
 
 ### T-32: Configurar Serwist com verificação periódica de versão (60 minutos)
 
-- [ ] Configurar o `SerwistServiceWorkerAdapter` para verificar por novas versões a cada inicialização do app e periodicamente com intervalo máximo de 60 minutos. A verificação deve ser assíncrona e não bloquear a thread principal.
+- [x] Configurar o `SerwistServiceWorkerAdapter` para verificar por novas versões a cada inicialização do app e periodicamente com intervalo máximo de 60 minutos. A verificação deve ser assíncrona e não bloquear a thread principal.
 
 **Rastreabilidade:** REQ-13 · REQ-14 · NFR-2
 **Depende de:** T-18
@@ -728,7 +728,7 @@ _Coberto por T-41 (componente reage a `isOnline = true` removendo o badge) e T-4
 
 ### T-60: Cobrir IT-4 — SerwistServiceWorkerAdapter (getUpdateReadiness e onUpdateAvailable)
 
-- [ ] Implementar os testes de integração `IT-4` cobrindo os três casos: sem SW em waiting `getUpdateReadiness().status` = `'idle'`, SW entra em waiting callback chamado e `status` = `'available'`, `activateUpdate()` envia `postMessage({ type: 'SKIP_WAITING' })` ao SW em waiting.
+- [x] Implementar os testes de integração `IT-4` cobrindo os três casos: sem SW em waiting `getUpdateReadiness().status` = `'idle'`, SW entra em waiting callback chamado e `status` = `'available'`, `activateUpdate()` envia `postMessage({ type: 'SKIP_WAITING' })` ao SW em waiting.
 
 **Rastreabilidade:** REQ-7 · REQ-9 · REQ-13 · REQ-15 · REQ-16
 **Depende de:** T-18 · T-25

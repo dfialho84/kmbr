@@ -35,6 +35,18 @@ export class SerwistServiceWorkerAdapter implements IInstallPort, IUpdatePort {
   private updateCallbacks: Array<() => void> = [];
 
   /**
+   * Intervalo máximo entre verificações periódicas de nova versão: 60 minutos.
+   * Rastreabilidade: REQ-13 · NFR-2
+   */
+  private static readonly UPDATE_CHECK_INTERVAL_MS = 60 * 60 * 1000;
+
+  /**
+   * Handle do intervalo de verificação periódica. Permite limpeza em testes.
+   * @internal
+   */
+  _periodicCheckHandle: ReturnType<typeof setInterval> | null = null;
+
+  /**
    * Função de recarga da página. Substituível em testes para evitar reload real.
    * Em produção, delega a `window.location.reload`.
    *
@@ -189,6 +201,23 @@ export class SerwistServiceWorkerAdapter implements IInstallPort, IUpdatePort {
             }
           });
         });
+
+        // Verifica nova versão imediatamente na inicialização e a cada 60 minutos.
+        // A chamada é não-bloqueante: registration.update() retorna uma Promise
+        // que é ignorada intencionalmente — falhas são silenciosas (REQ-16).
+        // Rastreabilidade: REQ-13 · NFR-2
+        const checkForUpdate = () => {
+          registration.update().catch(() => {
+            // Falha de verificação não deve interromper o app nem ser exibida
+            // ao usuário (REQ-16).
+          });
+        };
+
+        checkForUpdate();
+        this._periodicCheckHandle = setInterval(
+          checkForUpdate,
+          SerwistServiceWorkerAdapter.UPDATE_CHECK_INTERVAL_MS,
+        );
       })
       .catch(() => {
         // Falha silenciosa — SW pode não estar disponível em dev.
