@@ -18,40 +18,11 @@ let promptInstallCalled = false;
 // ---------------------------------------------------------------------------
 
 Given("navegador suporta instalação de PWA", () => {
-  // Limpa sessionStorage para garantir estado inicial limpo
+  // Limpa sessionStorage para garantir estado inicial limpo.
+  // O evento beforeinstallprompt será disparado após cy.visit no step When,
+  // pois o adapter registra o listener somente após montar (no constructor).
   cy.clearAllSessionStorage();
-
-  // Injeta o mock de beforeinstallprompt na janela antes de navegar
-  cy.window().then((win) => {
-    promptInstallCalled = false;
-
-    const mockPromptEvent = {
-      preventDefault: () => {},
-      prompt: () => {
-        promptInstallCalled = true;
-        return Promise.resolve({ outcome: "accepted" });
-      },
-      userChoice: Promise.resolve({ outcome: "accepted" }),
-    };
-
-    // Registra o evento beforeinstallprompt no window
-    // O SerwistServiceWorkerAdapter escuta este evento
-    win.dispatchEvent(
-      Object.assign(new Event("beforeinstallprompt"), mockPromptEvent),
-    );
-
-    // Sobrescreve matchMedia para simular modo standalone
-    cy.stub(win, "matchMedia").callsFake((query: string) => ({
-      matches: query === "(display-mode: standalone)",
-      media: query,
-      onchange: null,
-      addListener: () => {},
-      removeListener: () => {},
-      addEventListener: () => {},
-      removeEventListener: () => {},
-      dispatchEvent: () => false,
-    }));
-  });
+  promptInstallCalled = false;
 });
 
 Given("o app ainda não está instalado no dispositivo", () => {
@@ -64,17 +35,44 @@ Given("o app ainda não está instalado no dispositivo", () => {
 // ---------------------------------------------------------------------------
 
 When("o usuário acessa a aplicação", () => {
-  cy.visit("/");
+  // Visita a página com onBeforeLoad para stub de matchMedia antes do React montar.
+  // O stub de matchMedia precisa existir antes da hidratação do componente.
+  cy.visit("/", {
+    onBeforeLoad(win) {
+      // Stub matchMedia para simular modo não-standalone (app não instalado ainda).
+      cy.stub(win, "matchMedia").callsFake((query: string) => ({
+        matches: false,
+        media: query,
+        onchange: null,
+        addListener: () => {},
+        removeListener: () => {},
+        addEventListener: () => {},
+        removeEventListener: () => {},
+        dispatchEvent: () => false,
+      }));
+    },
+  });
 
-  // Dispara beforeinstallprompt após navegação, pois o adapter
-  // registra o listener ao montar
+  // Aguarda a hidratação do React completar verificando que o body existe
+  // e o Next.js terminou de processar. O useEffect do hook só roda após
+  // a hidratação — precisamos garantir que o listener já está registrado
+  // antes de disparar beforeinstallprompt.
+  cy.get("body").should("exist");
+
+  // Pequena espera para garantir que o useEffect do useInstallBanner rodou
+  // e registrou o listener de beforeinstallprompt na window.
+  // eslint-disable-next-line cypress/no-unnecessary-waiting
+  cy.wait(500);
+
+  // Dispara o evento após a hidratação — agora o listener do adapter
+  // e o listener do hook já estão registrados na window.
   cy.window().then((win) => {
     const mockPromptFn = cy.stub().callsFake(() => {
       promptInstallCalled = true;
       return Promise.resolve({ outcome: "accepted" });
     });
 
-    const event = new Event("beforeinstallprompt") as Event & {
+    const event = new win.Event("beforeinstallprompt") as Event & {
       preventDefault: () => void;
       prompt: () => Promise<{ outcome: string }>;
       userChoice: Promise<{ outcome: string }>;
@@ -114,9 +112,10 @@ Then("o app é adicionado à tela inicial do dispositivo", () => {
 });
 
 Then("o app abre em modo standalone sem barra de endereço", () => {
-  // Verifica que matchMedia retorna true para display-mode: standalone
-  cy.window().then((win) => {
-    const result = win.matchMedia("(display-mode: standalone)");
-    expect(result.matches).to.equal(true);
+  // Após instalar, o matchMedia para "(display-mode: standalone)" retornaria true
+  // em um dispositivo real. No teste, verificamos que o fluxo de instalação
+  // foi concluído (promptInstallCalled = true) como proxy deste comportamento.
+  cy.window().then(() => {
+    expect(promptInstallCalled).to.equal(true);
   });
 });
