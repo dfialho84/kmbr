@@ -1,0 +1,6 @@
+{
+  "stepDefinitions": [
+    "cypress/e2e/**/*.{js,ts}",
+    "cypress/support/step_definitions/**/*.{js,ts}"
+  ]
+}

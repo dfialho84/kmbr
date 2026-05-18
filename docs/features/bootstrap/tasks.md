@@ -60,7 +60,7 @@
 
 ### T-06: Cobrir GH-1 — Scenario "Usuário instala o app como PWA via banner"
 
-- [ ] Implementar o teste E2E Gherkin `GH-1` cobrindo todos os steps do Scenario "Usuário instala o app como PWA via banner". O setup deve mockar o evento `beforeinstallprompt` com `prompt()` resolvendo `{ outcome: 'accepted' }`, limpar `sessionStorage` antes do teste, e verificar que `InstallBanner` está visível, que os botões "Instalar" e "Descartar" existem no DOM com os textos exatos, que `IInstallPort.promptInstall()` é chamado ao clicar "Instalar" e que o mock de `window.matchMedia('(display-mode: standalone)')` retorna `true`.
+- [x] Implementar o teste E2E Gherkin `GH-1` cobrindo todos os steps do Scenario "Usuário instala o app como PWA via banner". O setup deve mockar o evento `beforeinstallprompt` com `prompt()` resolvendo `{ outcome: 'accepted' }`, limpar `sessionStorage` antes do teste, e verificar que `InstallBanner` está visível, que os botões "Instalar" e "Descartar" existem no DOM com os textos exatos, que `IInstallPort.promptInstall()` é chamado ao clicar "Instalar" e que o mock de `window.matchMedia('(display-mode: standalone)')` retorna `true`.
 
 **Rastreabilidade:** REQ-1 · REQ-2 · REQ-3 · REQ-4 · Scenario: "Usuário instala o app como PWA via banner"
 **Depende de:** T-05
