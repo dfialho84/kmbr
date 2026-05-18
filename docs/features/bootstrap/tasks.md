@@ -232,7 +232,7 @@
 
 ### T-19: Implementar hook useUpdateBanner
 
-- [ ] Criar o hook React `useUpdateBanner` na camada de apresentação. O hook deve instanciar `SerwistServiceWorkerAdapter` e `SessionStorageAdapter`, criar o `UpdateBannerUseCase` e expor `showBanner`, `onUpdate` e `onDefer` tipados para consumo pelo componente `UpdateBanner`.
+- [x] Criar o hook React `useUpdateBanner` na camada de apresentação. O hook deve instanciar `SerwistServiceWorkerAdapter` e `SessionStorageAdapter`, criar o `UpdateBannerUseCase` e expor `showBanner`, `onUpdate` e `onDefer` tipados para consumo pelo componente `UpdateBanner`.
 
 **Rastreabilidade:** REQ-7 · REQ-8 · REQ-11 · REQ-12
 **Depende de:** T-16 · T-17 · T-18 · T-10

@@ -38,6 +38,26 @@ export class UpdateBannerUseCase {
   }
 
   /**
+   * Delega a ativação da nova versão do Service Worker para o port.
+   * Erros são propagados sem captura silenciosa.
+   *
+   * Rastreabilidade: REQ-9 · REQ-10
+   */
+  async activateUpdate(): Promise<void> {
+    await this.updatePort.activateUpdate();
+  }
+
+  /**
+   * Adia o banner de atualização na sessão corrente persistindo a flag
+   * `updateBannerDismissed`. O SW em waiting permanece inalterado.
+   *
+   * Rastreabilidade: REQ-11 · REQ-12
+   */
+  defer(): void {
+    this.sessionPort.setFlag(UPDATE_BANNER_DISMISSED_KEY, true);
+  }
+
+  /**
    * Determina se o banner de atualização deve ser exibido.
    *
    * Retorna `true` somente quando:
