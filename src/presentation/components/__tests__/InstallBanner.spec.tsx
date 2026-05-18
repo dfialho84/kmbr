@@ -16,12 +16,16 @@ import { useInstallBanner } from '@/presentation/hooks/useInstallBanner';
 const mockUseInstallBanner = useInstallBanner as jest.MockedFunction<typeof useInstallBanner>;
 
 /**
- * Testes do componente InstallBanner.
+ * Testes do componente InstallBanner (Dialog shadcn/ui).
  *
  * Rastreabilidade: REQ-1 · REQ-2
- * Critério T-05: renderiza com ambos os botões quando showBanner=true;
- *               não renderiza quando showBanner=false;
- *               botões têm rótulos acessíveis.
+ * Critério T-05:
+ *   - Dialog abre com título "Instalar aplicativo" quando showBanner=true
+ *   - Não renderiza nada quando showBanner=false
+ *   - ESC/clique fora fecha o Dialog sem persistir flag (onDismiss não chamado)
+ *   - Botão "Agora não" chama onDismiss (persiste flag)
+ *   - Botão "Instalar" chama onInstall
+ *   - Botões têm rótulos acessíveis verificáveis por query de acessibilidade
  */
 describe('InstallBanner', () => {
   describe('quando showBanner = false', () => {
@@ -43,9 +47,14 @@ describe('InstallBanner', () => {
       expect(screen.queryByRole('button', { name: /instalar/i })).not.toBeInTheDocument();
     });
 
-    it('não exibe o botão Descartar', () => {
+    it('não exibe o botão Agora não', () => {
       render(<InstallBanner />);
-      expect(screen.queryByRole('button', { name: /descartar/i })).not.toBeInTheDocument();
+      expect(screen.queryByRole('button', { name: /agora não/i })).not.toBeInTheDocument();
+    });
+
+    it('não exibe o dialog', () => {
+      render(<InstallBanner />);
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
     });
   });
 
@@ -62,9 +71,14 @@ describe('InstallBanner', () => {
       });
     });
 
-    it('renderiza o banner', () => {
+    it('abre o Dialog com role="dialog"', () => {
       render(<InstallBanner />);
-      expect(screen.getByTestId('install-banner')).toBeInTheDocument();
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    it('exibe o título "Instalar aplicativo"', () => {
+      render(<InstallBanner />);
+      expect(screen.getByText('Instalar aplicativo')).toBeInTheDocument();
     });
 
     it('exibe o botão "Instalar" com rótulo acessível', () => {
@@ -73,9 +87,9 @@ describe('InstallBanner', () => {
       expect(btn).toBeInTheDocument();
     });
 
-    it('exibe o botão "Descartar" com rótulo acessível', () => {
+    it('exibe o botão "Agora não" com rótulo acessível', () => {
       render(<InstallBanner />);
-      const btn = screen.getByRole('button', { name: /descartar/i });
+      const btn = screen.getByRole('button', { name: /agora não/i });
       expect(btn).toBeInTheDocument();
     });
 
@@ -86,18 +100,22 @@ describe('InstallBanner', () => {
       expect(mockOnInstall).toHaveBeenCalledTimes(1);
     });
 
-    it('chama onDismiss ao clicar "Descartar"', async () => {
+    it('chama onDismiss ao clicar "Agora não"', async () => {
       render(<InstallBanner />);
-      const btn = screen.getByRole('button', { name: /descartar/i });
+      const btn = screen.getByRole('button', { name: /agora não/i });
       await userEvent.click(btn);
       expect(mockOnDismiss).toHaveBeenCalledTimes(1);
     });
 
-    it('banner tem role="banner" e aria-label acessível', () => {
+    it('ESC não chama onDismiss (fechamento silencioso)', async () => {
       render(<InstallBanner />);
-      const banner = screen.getByRole('banner');
-      expect(banner).toBeInTheDocument();
-      expect(banner).toHaveAttribute('aria-label');
+      await userEvent.keyboard('{Escape}');
+      expect(mockOnDismiss).not.toHaveBeenCalled();
+    });
+
+    it('banner tem data-testid acessível', () => {
+      render(<InstallBanner />);
+      expect(screen.getByTestId('install-banner')).toBeInTheDocument();
     });
   });
 });

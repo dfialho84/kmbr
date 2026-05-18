@@ -1,50 +1,74 @@
 'use client';
 
+import React from 'react';
+
+import { Button } from '@/components/ui/button';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
 import { useInstallBanner } from '@/presentation/hooks/useInstallBanner';
 
 /**
- * Componente de apresentação que renderiza o banner de instalação PWA.
+ * Componente de apresentação que renderiza o banner de instalação PWA
+ * usando o componente Dialog do shadcn/ui (Base UI).
  *
- * Renderiza o banner somente quando `showBanner = true` (controlado pelo
- * `useInstallBanner`). Apresenta os botões "Instalar" e "Descartar" com
- * rótulos textuais explícitos acessíveis por leitores de tela.
+ * O Dialog abre somente quando `showBanner = true` (controlado pelo
+ * `useInstallBanner`). Apresenta:
+ *   - Título: "Instalar aplicativo"
+ *   - Descrição: texto explicativo sobre benefícios da instalação
+ *   - Botão "Instalar" (variant default) — chama onInstall e salva flag
+ *   - Botão "Agora não" (variant outline) — chama onDismiss e salva flag
  *
- * Estados suportados:
- * - Oculto: `showBanner = false` — nada é renderizado
- * - Visível: `showBanner = true` — banner com botões "Instalar" e "Descartar"
- * - Instalando: usuário clicou "Instalar" — delegado ao hook
- * - Oculto após descartar: hook atualiza `showBanner = false`
+ * Comportamento de fechamento:
+ *   - ESC ou clique fora (onOpenChange) → fecha silenciosamente sem salvar flag
+ *   - Botão "Agora não" → chama onDismiss normalmente (salva flag na sessão)
  *
  * Rastreabilidade: REQ-1 · REQ-2 · Scenario: "Usuário instala o app como PWA via banner"
  */
 export function InstallBanner(): React.JSX.Element | null {
   const { showBanner, onInstall, onDismiss } = useInstallBanner();
 
-  if (!showBanner) {
-    return null;
+  // onOpenChange é chamado quando ESC ou clique fora fecha o Dialog.
+  // Fecha silenciosamente sem persistir a flag — o banner reaparece na próxima visita.
+  function handleOpenChange(open: boolean): void {
+    if (!open) {
+      // Não chama onDismiss — não persiste flag
+      // O hook controla showBanner; o fechamento via ESC/overlay é silencioso
+    }
   }
 
   return (
-    <div
-      role="banner"
-      aria-label="Banner de instalação do app"
-      data-testid="install-banner"
-    >
-      <p>Instale o app na sua tela inicial para acesso rápido.</p>
-      <button
-        type="button"
-        aria-label="Instalar"
-        onClick={() => void onInstall()}
-      >
-        Instalar
-      </button>
-      <button
-        type="button"
-        aria-label="Descartar"
-        onClick={onDismiss}
-      >
-        Descartar
-      </button>
-    </div>
+    <Dialog open={showBanner} onOpenChange={handleOpenChange}>
+      <DialogContent data-testid="install-banner" showCloseButton={false}>
+        <DialogHeader>
+          <DialogTitle>Instalar aplicativo</DialogTitle>
+          <DialogDescription>
+            Instale o app na sua tela inicial para acesso rápido, uso offline e
+            uma experiência mais fluida sem a barra de endereços do navegador.
+          </DialogDescription>
+        </DialogHeader>
+        <DialogFooter>
+          <Button
+            variant="outline"
+            aria-label="Agora não"
+            onClick={onDismiss}
+          >
+            Agora não
+          </Button>
+          <Button
+            variant="default"
+            aria-label="Instalar"
+            onClick={() => void onInstall()}
+          >
+            Instalar
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 }

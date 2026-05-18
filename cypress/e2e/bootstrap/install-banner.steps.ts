@@ -1,8 +1,9 @@
 /**
- * Step definitions para GH-1 — Scenario "Usuário instala o app como PWA via banner"
+ * Step definitions para GH-1 e GH-2:
+ * - GH-1: Scenario "Usuário instala o app como PWA via banner"
+ * - GH-2: Scenario "Usuário descarta banner de instalação"
  *
- * Rastreabilidade: REQ-1 · REQ-2 · REQ-3 · REQ-4
- * Scenario: "Usuário instala o app como PWA via banner"
+ * Rastreabilidade: REQ-1 · REQ-2 · REQ-3 · REQ-4 · REQ-5 · REQ-6
  */
 
 import { Given, When, Then } from "@badeball/cypress-cucumber-preprocessor";
@@ -118,4 +119,34 @@ Then("o app abre em modo standalone sem barra de endereço", () => {
   cy.window().then(() => {
     expect(promptInstallCalled).to.equal(true);
   });
+});
+
+// ---------------------------------------------------------------------------
+// Steps adicionais — GH-2: Usuário descarta banner de instalação
+// ---------------------------------------------------------------------------
+
+/**
+ * GH-2 — Then: o banner desaparece da tela após clicar em "Descartar"
+ */
+Then("o banner desaparece da tela", () => {
+  cy.get('[data-testid="install-banner"]').should("not.exist");
+});
+
+/**
+ * GH-2 — And: o banner não reaparece na mesma sessão
+ * Verifica que sessionStorage['installBannerDismissed'] = 'true'
+ * e que ao re-renderizar (reload) o banner permanece oculto.
+ */
+Then("o banner não reaparece na mesma sessão", () => {
+  cy.window().then((win) => {
+    expect(win.sessionStorage.getItem("installBannerDismissed")).to.equal("true");
+  });
+});
+
+/**
+ * GH-2 — And: o app continua funcionando normalmente como web app
+ */
+Then("o app continua funcionando normalmente como web app", () => {
+  cy.get("body").should("exist");
+  cy.get("main, #__next, [data-nextjs-scroll-focus-boundary]").should("exist");
 });

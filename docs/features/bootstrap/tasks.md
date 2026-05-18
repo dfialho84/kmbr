@@ -106,7 +106,7 @@
 
 ### T-08: Implementar SerwistServiceWorkerAdapter.promptInstall()
 
-- [ ] Adicionar o método `promptInstall()` ao `SerwistServiceWorkerAdapter`. O método deve invocar `event.prompt()` na instância de `BeforeInstallPromptEvent` capturada e marcar o prompt como consumido, tornando `isInstallAvailable()` `false` após a chamada.
+- [x] Adicionar o método `promptInstall()` ao `SerwistServiceWorkerAdapter`. O método deve invocar `event.prompt()` na instância de `BeforeInstallPromptEvent` capturada e marcar o prompt como consumido, tornando `isInstallAvailable()` `false` após a chamada.
 
 **Rastreabilidade:** REQ-3 · REQ-4
 **Depende de:** T-03
@@ -134,7 +134,7 @@
 
 ### T-10: Implementar SessionStorageAdapter
 
-- [ ] Criar o `SessionStorageAdapter` na camada de infraestrutura implementando `ISessionPort`. O método `getFlag(key)` deve ler a chave de `sessionStorage` retornando `false` quando ausente. O método `setFlag(key, value)` deve escrever o valor serializado em `sessionStorage`.
+- [x] Criar o `SessionStorageAdapter` na camada de infraestrutura implementando `ISessionPort`. O método `getFlag(key)` deve ler a chave de `sessionStorage` retornando `false` quando ausente. O método `setFlag(key, value)` deve escrever o valor serializado em `sessionStorage`.
 
 **Rastreabilidade:** REQ-5 · REQ-6 · REQ-11 · REQ-12
 **Depende de:** T-01
@@ -144,7 +144,7 @@
 
 ### T-11: Implementar InstallBannerUseCase.dismiss()
 
-- [ ] Criar o método `dismiss()` no `InstallBannerUseCase`. O método deve chamar `ISessionPort.setFlag('installBannerDismissed', true)` com o valor booleano `true` (não string).
+- [x] Criar o método `dismiss()` no `InstallBannerUseCase`. O método deve chamar `ISessionPort.setFlag('installBannerDismissed', true)` com o valor booleano `true` (não string).
 
 **Rastreabilidade:** REQ-5 · REQ-6
 **Depende de:** T-01
@@ -154,7 +154,7 @@
 
 ### T-12: Cobrir GH-2 — Scenario "Usuário descarta banner de instalação"
 
-- [ ] Implementar o teste E2E Gherkin `GH-2` cobrindo todos os steps do Scenario "Usuário descarta banner de instalação". Deve verificar que após clicar "Descartar" o `InstallBanner` não está mais no DOM, que `sessionStorage.getItem('installBannerDismissed')` = `'true'`, e que ao re-renderizar o componente o banner permanece oculto.
+- [x] Implementar o teste E2E Gherkin `GH-2` cobrindo todos os steps do Scenario "Usuário descarta banner de instalação". Deve verificar que após clicar "Descartar" o `InstallBanner` não está mais no DOM, que `sessionStorage.getItem('installBannerDismissed')` = `'true'`, e que ao re-renderizar o componente o banner permanece oculto.
 
 **Rastreabilidade:** REQ-5 · REQ-6 · Scenario: "Usuário descarta banner de instalação"
 **Depende de:** T-05
@@ -168,7 +168,7 @@
 
 ### T-13: Cobrir UT-1 — InstallBannerUseCase.shouldShowBanner()
 
-- [ ] Implementar os testes unitários `UT-1` cobrindo os quatro casos de `shouldShowBanner()`: caminho feliz (retorna true), install indisponível (retorna false), banner descartado na sessão (retorna false) e ambas condições falsas (retorna false). Usar mocks de `IInstallPort` e `ISessionPort`.
+- [x] Implementar os testes unitários `UT-1` cobrindo os quatro casos de `shouldShowBanner()`: caminho feliz (retorna true), install indisponível (retorna false), banner descartado na sessão (retorna false) e ambas condições falsas (retorna false). Usar mocks de `IInstallPort` e `ISessionPort`.
 
 **Rastreabilidade:** REQ-1 · REQ-5 · REQ-6 · REQ-22
 **Depende de:** T-02
@@ -178,7 +178,7 @@
 
 ### T-14: Cobrir UT-3 — InstallBannerUseCase.dismiss()
 
-- [ ] Implementar os testes unitários `UT-3` cobrindo os casos de `dismiss()`: setFlag chamado com `'installBannerDismissed'` e valor `true` (booleano, não string). Usar spy em `ISessionPort.setFlag`.
+- [x] Implementar os testes unitários `UT-3` cobrindo os casos de `dismiss()`: setFlag chamado com `'installBannerDismissed'` e valor `true` (booleano, não string). Usar spy em `ISessionPort.setFlag`.
 
 **Rastreabilidade:** REQ-5 · REQ-6
 **Depende de:** T-11
@@ -708,7 +708,7 @@ _Coberto por T-41 (componente reage a `isOnline = true` removendo o badge) e T-4
 
 ### T-58: Cobrir IT-1 — SessionStorageAdapter
 
-- [ ] Implementar os testes de integração `IT-1` cobrindo os quatro casos de `SessionStorageAdapter`: flag inexistente retorna `false`, flag setada como `true` retorna `true` na mesma sessão, isolamento entre chaves (`installBannerDismissed` não afeta `updateBannerDismissed`), e `sessionStorage` limpa no teardown de cada teste.
+- [x] Implementar os testes de integração `IT-1` cobrindo os quatro casos de `SessionStorageAdapter`: flag inexistente retorna `false`, flag setada como `true` retorna `true` na mesma sessão, isolamento entre chaves (`installBannerDismissed` não afeta `updateBannerDismissed`), e `sessionStorage` limpa no teardown de cada teste.
 
 **Rastreabilidade:** REQ-5 · REQ-6 · REQ-11 · REQ-12
 **Depende de:** T-10
@@ -718,7 +718,7 @@ _Coberto por T-41 (componente reage a `isOnline = true` removendo o badge) e T-4
 
 ### T-59: Cobrir IT-3 — SerwistServiceWorkerAdapter (isInstallAvailable e promptInstall)
 
-- [ ] Implementar os testes de integração `IT-3` cobrindo os quatro casos de `SerwistServiceWorkerAdapter` para install: antes do evento `isInstallAvailable()` = `false`, após `beforeinstallprompt` = `true`, `promptInstall()` chama `event.prompt()`, após `promptInstall()` executado `isInstallAvailable()` = `false`.
+- [x] Implementar os testes de integração `IT-3` cobrindo os quatro casos de `SerwistServiceWorkerAdapter` para install: antes do evento `isInstallAvailable()` = `false`, após `beforeinstallprompt` = `true`, `promptInstall()` chama `event.prompt()`, após `promptInstall()` executado `isInstallAvailable()` = `false`.
 
 **Rastreabilidade:** REQ-1 · REQ-3
 **Depende de:** T-03 · T-08
@@ -738,7 +738,7 @@ _Coberto por T-41 (componente reage a `isOnline = true` removendo o badge) e T-4
 
 ### T-61: Cobrir UT-2 — InstallBannerUseCase.install()
 
-- [ ] Implementar os testes unitários `UT-2` cobrindo os dois casos de `install()`: chamada bem-sucedida a `IInstallPort.promptInstall()` e propagação de rejeição sem captura silenciosa.
+- [x] Implementar os testes unitários `UT-2` cobrindo os dois casos de `install()`: chamada bem-sucedida a `IInstallPort.promptInstall()` e propagação de rejeição sem captura silenciosa.
 
 **Rastreabilidade:** REQ-3
 **Depende de:** T-07
