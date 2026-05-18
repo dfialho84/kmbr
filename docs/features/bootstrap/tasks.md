@@ -46,7 +46,7 @@
 
 ### T-62: Instalar shadcn/ui e adicionar componentes Dialog e Button
 
-- [ ] Inicializar o shadcn/ui no projeto com `npx shadcn@latest init` (tema neutro, CSS variables ativadas). Adicionar os componentes `Dialog` e `Button` via `npx shadcn@latest add dialog button`. Verificar que os arquivos gerados em `src/components/ui/` compilam sem erros TypeScript e que o `tailwind.config.ts` referencia o caminho `./src/components/ui/**` no `content`.
+- [x] Inicializar o shadcn/ui no projeto com `npx shadcn@latest init` (tema neutro, CSS variables ativadas). Adicionar os componentes `Dialog` e `Button` via `npx shadcn@latest add dialog button`. Verificar que os arquivos gerados em `src/components/ui/` compilam sem erros TypeScript e que o `tailwind.config.ts` referencia o caminho `./src/components/ui/**` no `content`.
 
 **Rastreabilidade:** REQ-1 · REQ-2
 **Depende de:** —
