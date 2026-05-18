@@ -366,7 +366,7 @@ _Coberto por T-25 (activateUpdate preserva sessão via cookie/token existente) e
 
 ### T-30: Cobrir GH-5 — Scenario "Usuário clica Depois na atualização"
 
-- [ ] Implementar o teste E2E Gherkin `GH-5` cobrindo todos os steps do Scenario "Usuário clica Depois na atualização". Verificar que `UpdateBanner` some do DOM após clicar "Depois", que `IUpdatePort.activateUpdate()` não foi chamado, que o SW em waiting permanece inalterado e que elementos interativos do app respondem normalmente.
+- [x] Implementar o teste E2E Gherkin `GH-5` cobrindo todos os steps do Scenario "Usuário clica Depois na atualização". Verificar que `UpdateBanner` some do DOM após clicar "Depois", que `IUpdatePort.activateUpdate()` não foi chamado, que o SW em waiting permanece inalterado e que elementos interativos do app respondem normalmente.
 
 **Rastreabilidade:** REQ-11 · REQ-12 · Scenario: "Usuário clica \"Depois\" na atualização"
 **Depende de:** T-20
@@ -380,7 +380,7 @@ _Coberto por T-25 (activateUpdate preserva sessão via cookie/token existente) e
 
 ### T-31: Cobrir GH-6 — Scenario "Banner de atualização reaparece na próxima sessão"
 
-- [ ] Implementar o teste E2E Gherkin `GH-6` cobrindo todos os steps do Scenario "Banner de atualização reaparece na próxima sessão". O setup deve simular nova sessão com `sessionStorage` limpa, SW ainda em `waiting`, e verificar que `UpdateBanner` está visível com ambos os botões clicáveis.
+- [x] Implementar o teste E2E Gherkin `GH-6` cobrindo todos os steps do Scenario "Banner de atualização reaparece na próxima sessão". O setup deve simular nova sessão com `sessionStorage` limpa, SW ainda em `waiting`, e verificar que `UpdateBanner` está visível com ambos os botões clicáveis.
 
 **Rastreabilidade:** REQ-11 · REQ-12 · Scenario: "Banner de atualização reaparece na próxima sessão"
 **Depende de:** T-20

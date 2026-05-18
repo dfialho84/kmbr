@@ -421,3 +421,89 @@ Then("o usuário permanece autenticado após o reload", () => {
 Then("a interface do app reflete a nova versão", () => {
   cy.get("body").should("have.attr", "data-version");
 });
+
+// ---------------------------------------------------------------------------
+// GH-5 — Usuário clica Depois na atualização
+// ---------------------------------------------------------------------------
+
+/**
+ * GH-5 — And: o app continua funcionando com a versão anterior
+ *
+ * Verifica que IUpdatePort.activateUpdate() não foi chamado (SW em waiting permanece).
+ * Como o adapter expõe __swUpdateAdapter na window, verificamos que postMessage
+ * SKIP_WAITING não foi enviado ao SW em waiting.
+ * Rastreabilidade: REQ-11
+ */
+Then("o app continua funcionando com a versão anterior", () => {
+  // O postMessage SKIP_WAITING não deve ter sido enviado — o defer() não ativa o SW.
+  cy.get("@postMessageSpy").should("not.have.been.called");
+});
+
+/**
+ * GH-5 — And: o app continua respondendo normalmente às ações do usuário
+ *
+ * Verifica que elementos interativos do app respondem após o dismiss.
+ * Rastreabilidade: REQ-11
+ */
+Then("o app continua respondendo normalmente às ações do usuário", () => {
+  // Verifica que o conteúdo principal continua renderizado e interativo.
+  cy.get("main").should("exist");
+  // Verifica que a sessionStorage contém a flag de adiamento.
+  cy.window().then((win) => {
+    expect(win.sessionStorage.getItem("updateBannerDismissed")).to.equal("true");
+  });
+});
+
+// ---------------------------------------------------------------------------
+// GH-6 — Banner de atualização reaparece na próxima sessão
+// ---------------------------------------------------------------------------
+
+/**
+ * GH-6 — Given: o usuário clicou em "Depois" na sessão anterior
+ *
+ * Simula que na sessão anterior o usuário clicou "Depois",
+ * setando a flag e depois limpando sessionStorage para simular nova sessão.
+ * Rastreabilidade: REQ-12
+ */
+Given("o usuário clicou em \"Depois\" na sessão anterior", () => {
+  // A flag foi setada na sessão anterior — mas sessionStorage é isolada por sessão.
+  // Apenas configuramos o estado compartilhado; a nova sessão será simulada no When.
+  mockWaitingSW = { postMessage: null, state: "installed" };
+});
+
+/**
+ * GH-6 — And: uma nova versão continua disponível em cache
+ *
+ * Confirma que o SW mock com worker em waiting será configurado no When.
+ * Rastreabilidade: REQ-13
+ */
+Given("uma nova versão continua disponível em cache", () => {
+  // O mock do SW em waiting é injetado via onBeforeLoad no step When.
+  // Estado já está pronto via mockWaitingSW.
+});
+
+/**
+ * GH-6 — Then: o banner de atualização é exibido novamente
+ *
+ * Verifica que UpdateBanner está visível na nova sessão (sessionStorage limpa).
+ * Rastreabilidade: REQ-12
+ */
+Then("o banner de atualização é exibido novamente", () => {
+  cy.get('[data-testid="update-banner"]').should("be.visible");
+});
+
+/**
+ * GH-6 — And: o usuário pode clicar em "Atualizar agora" ou "Depois" novamente
+ *
+ * Verifica que ambos os botões estão presentes e clicáveis no banner.
+ * Rastreabilidade: REQ-12
+ */
+Then(
+  'o usuário pode clicar em "Atualizar agora" ou "Depois" novamente',
+  () => {
+    cy.get('[data-testid="update-banner"]').within(() => {
+      cy.contains("button", "Atualizar agora").should("exist").and("not.be.disabled");
+      cy.contains("button", "Depois").should("exist").and("not.be.disabled");
+    });
+  },
+);

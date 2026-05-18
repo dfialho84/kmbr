@@ -9,7 +9,7 @@ Feature: Bootstrap — Banner de Atualização PWA
     And o banner de atualização contém botões "Atualizar agora" e "Depois"
     And a versão anterior continua funcional enquanto o banner é exibido
 
-  Scenario: Usuário clica Atualizar agora e app recarrega
+  Scenario: Usuário clica "Atualizar agora" e app recarrega
     Given o app está instalado como PWA
     And uma nova versão foi baixada e está pronta
     And um banner de atualização é exibido
@@ -17,3 +17,18 @@ Feature: Bootstrap — Banner de Atualização PWA
     Then o app faz reload carregando a nova versão imediatamente
     And o usuário permanece autenticado após o reload
     And a interface do app reflete a nova versão
+
+  Scenario: Usuário clica "Depois" na atualização
+    Given uma nova versão foi baixada e está pronta
+    And um banner de atualização é exibido
+    When o usuário clica em "Depois"
+    Then o banner desaparece da tela
+    And o app continua funcionando com a versão anterior
+    And o app continua respondendo normalmente às ações do usuário
+
+  Scenario: Banner de atualização reaparece na próxima sessão
+    Given o usuário clicou em "Depois" na sessão anterior
+    And uma nova versão continua disponível em cache
+    When o usuário inicia uma nova sessão do app
+    Then o banner de atualização é exibido novamente
+    And o usuário pode clicar em "Atualizar agora" ou "Depois" novamente

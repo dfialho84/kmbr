@@ -126,10 +126,12 @@ Then("o app abre em modo standalone sem barra de endereço", () => {
 // ---------------------------------------------------------------------------
 
 /**
- * GH-2 — Then: o banner desaparece da tela após clicar em "Descartar"
+ * GH-2 / GH-5 — Then: o banner desaparece da tela após clicar em "Descartar" ou "Depois"
+ * Step compartilhado: verifica que nenhum banner de ação (install ou update) está visível.
  */
 Then("o banner desaparece da tela", () => {
   cy.get('[data-testid="install-banner"]').should("not.exist");
+  cy.get('[data-testid="update-banner"]').should("not.exist");
 });
 
 /**
