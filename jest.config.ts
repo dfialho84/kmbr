@@ -18,10 +18,7 @@ const config: Config = {
   ],
   transform: {
     '^.+\\.tsx?$': ['ts-jest', {
-      tsconfig: {
-        module: 'commonjs',
-        jsx: 'react-jsx',
-      },
+      tsconfig: './tsconfig.jest.json',
     }],
   },
 };

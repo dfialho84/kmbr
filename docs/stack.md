@@ -9,9 +9,10 @@
 
 - **Framework**: Next.js 16.2.6 com TypeScript 5 e React 19.2.4
 - **UI**: Tailwind CSS 4 + shadcn/ui
-- **PWS**: Serwist
+- **PWA**: Serwist
 - **Validação de Fomulários**: zod
 - **Forms**: react hook form
+- **Toasts/Avisos**: Sonner
 - **Testes unitários/integração**: Jest
 - **Testes E2E**: Cypress + Cucumber
 - **Testes de carga**: k6

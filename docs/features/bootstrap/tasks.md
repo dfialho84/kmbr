@@ -44,13 +44,29 @@
 
 ---
 
-### T-05: Implementar componente InstallBanner
+### T-62: Instalar shadcn/ui e adicionar componentes Dialog e Button
 
-- [x] Criar o componente React `InstallBanner` na camada de apresentação. O componente deve consumir `useInstallBanner` e renderizar o banner de instalação somente quando `showBanner` for `true`. Deve apresentar os botões com rótulos exatos "Instalar" e "Descartar" acessíveis por leitores de tela (atributos `aria-label` ou rótulo textual explícito), conforme `views/banner-pwa/tela.md`. O componente deve suportar os estados: Oculto, Visível, Instalando e Oculto após descartar.
+- [ ] Inicializar o shadcn/ui no projeto com `npx shadcn@latest init` (tema neutro, CSS variables ativadas). Adicionar os componentes `Dialog` e `Button` via `npx shadcn@latest add dialog button`. Verificar que os arquivos gerados em `src/components/ui/` compilam sem erros TypeScript e que o `tailwind.config.ts` referencia o caminho `./src/components/ui/**` no `content`.
+
+**Rastreabilidade:** REQ-1 · REQ-2
+**Depende de:** —
+**Concluída quando:** `src/components/ui/dialog.tsx` e `src/components/ui/button.tsx` existem; `npx tsc --noEmit` não reporta erros relacionados a esses componentes; o design system de shadcn está configurado em `globals.css`.
+
+---
+
+### T-05: Implementar componente InstallBanner com Dialog do shadcn/ui
+
+- [x] Criar o componente React `InstallBanner` na camada de apresentação usando o componente `Dialog` do shadcn/ui. O componente deve consumir `useInstallBanner` e abrir o Dialog somente quando `showBanner` for `true`. O Dialog deve ter:
+  - Título: **"Instalar aplicativo"** (em `DialogTitle`)
+  - Corpo: texto explicativo sobre os benefícios da instalação (em `DialogDescription`)
+  - Botão primário com rótulo exato **"Instalar"** (variant `default`) que chama `onInstall`
+  - Botão secundário com rótulo exato **"Agora não"** (variant `ghost` ou `outline`) que chama `onDismiss`
+  - Fechar via ESC ou clique fora do Dialog fecha silenciosamente (chama apenas `onDismiss` no handler `onOpenChange`) **sem** salvar a flag `installBannerDismissed` — o banner reaparece na próxima visita
+  - Botão "Agora não" clicado chama `onDismiss` normalmente (salva a flag e oculta na sessão corrente)
 
 **Rastreabilidade:** REQ-1 · REQ-2 · Scenario: "Usuário instala o app como PWA via banner"
-**Depende de:** T-04
-**Concluída quando:** O componente renderiza o banner com ambos os botões quando `showBanner = true`; não renderiza nada quando `showBanner = false`; botões têm rótulos acessíveis verificáveis por query de acessibilidade.
+**Depende de:** T-04 · T-62
+**Concluída quando:** O Dialog abre com título "Instalar aplicativo" e dois botões quando `showBanner = true`; não renderiza nada quando `showBanner = false`; ESC/clique fora fecha o Dialog sem persistir flag; clique em "Agora não" persiste flag e oculta nas sessão; botões têm rótulos acessíveis verificáveis por query de acessibilidade.
 
 ---
 
@@ -60,7 +76,13 @@
 
 ### T-06: Cobrir GH-1 — Scenario "Usuário instala o app como PWA via banner"
 
-- [x] Implementar o teste E2E Gherkin `GH-1` cobrindo todos os steps do Scenario "Usuário instala o app como PWA via banner". O setup deve mockar o evento `beforeinstallprompt` com `prompt()` resolvendo `{ outcome: 'accepted' }`, limpar `sessionStorage` antes do teste, e verificar que `InstallBanner` está visível, que os botões "Instalar" e "Descartar" existem no DOM com os textos exatos, que `IInstallPort.promptInstall()` é chamado ao clicar "Instalar" e que o mock de `window.matchMedia('(display-mode: standalone)')` retorna `true`.
+- [x] Implementar o teste E2E Gherkin `GH-1` cobrindo todos os steps do Scenario "Usuário instala o app como PWA via banner". O setup deve mockar o evento `beforeinstallprompt` com `prompt()` resolvendo `{ outcome: 'accepted' }`, limpar `sessionStorage` antes do teste. Os steps devem verificar:
+  - O Dialog do shadcn/ui está **aberto** (presença de `[role="dialog"]` no DOM)
+  - O título "Instalar aplicativo" está visível dentro do Dialog
+  - Os botões "Instalar" e "Agora não" existem no DOM com os textos exatos
+  - `IInstallPort.promptInstall()` é chamado ao clicar "Instalar"
+  - Após clicar "Instalar", o Dialog é **fechado** (`[role="dialog"]` some do DOM)
+  - O mock de `window.matchMedia('(display-mode: standalone)')` retorna `true`
 
 **Rastreabilidade:** REQ-1 · REQ-2 · REQ-3 · REQ-4 · Scenario: "Usuário instala o app como PWA via banner"
 **Depende de:** T-05
@@ -74,7 +96,7 @@
 
 ### T-07: Implementar InstallBannerUseCase.install()
 
-- [ ] Criar o método `install()` no `InstallBannerUseCase`. O método deve delegar a execução do prompt de instalação para `IInstallPort.promptInstall()` e aguardar sua resolução; erros devem ser propagados sem captura silenciosa.
+- [x] Criar o método `install()` no `InstallBannerUseCase`. O método deve delegar a execução do prompt de instalação para `IInstallPort.promptInstall()` e aguardar sua resolução; erros devem ser propagados sem captura silenciosa.
 
 **Rastreabilidade:** REQ-3
 **Depende de:** T-01
@@ -789,6 +811,7 @@ flowchart TD
     T59["T-59: IT-3"]
     T60["T-60: IT-4"]
     T61["T-61: UT-2"]
+    T62["T-62: shadcn/ui — Dialog + Button"]
 
     T01 --> T02
     T01 --> T07
@@ -806,6 +829,7 @@ flowchart TD
     T03 --> T45
     T03 --> T48
     T04 --> T05
+    T62 --> T05
     T05 --> T06
     T05 --> T12
     T07 --> T61

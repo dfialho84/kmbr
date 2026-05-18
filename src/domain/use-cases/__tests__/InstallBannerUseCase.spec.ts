@@ -1,17 +1,22 @@
 /**
- * UT-1: InstallBannerUseCase.shouldShowBanner()
+ * Testes unitários do InstallBannerUseCase.
  *
- * Rastreabilidade: REQ-1 · REQ-5 · REQ-6 · REQ-22
+ * UT-1: shouldShowBanner() — Rastreabilidade: REQ-1 · REQ-5 · REQ-6 · REQ-22
+ * UT-2: install()          — Rastreabilidade: REQ-3
+ * UT-3: dismiss()          — Rastreabilidade: REQ-5 · REQ-6
  */
 
 import { InstallBannerUseCase } from '../InstallBannerUseCase';
 import type { IInstallPort } from '../../ports/IInstallPort';
 import type { ISessionPort } from '../../ports/ISessionPort';
 
-function makeInstallPort(isAvailable: boolean): IInstallPort {
+function makeInstallPort(
+  isAvailable: boolean,
+  promptImpl?: () => Promise<void>,
+): IInstallPort {
   return {
     isInstallAvailable: () => isAvailable,
-    promptInstall: jest.fn().mockResolvedValue(undefined),
+    promptInstall: promptImpl ?? jest.fn().mockResolvedValue(undefined),
   };
 }
 
@@ -73,5 +78,92 @@ describe('InstallBannerUseCase.shouldShowBanner()', () => {
     );
 
     expect(useCase.shouldShowBanner()).toBe(false);
+  });
+});
+
+/**
+ * UT-2: InstallBannerUseCase.install()
+ *
+ * Rastreabilidade: REQ-3
+ */
+describe('InstallBannerUseCase.install()', () => {
+  /**
+   * UT-2 — Caso 1: caminho feliz
+   * promptInstall() resolve → install() resolve sem erros
+   */
+  it('chama IInstallPort.promptInstall() e aguarda resolução', async () => {
+    const promptInstall = jest.fn().mockResolvedValue(undefined);
+    const useCase = new InstallBannerUseCase(
+      makeInstallPort(true, promptInstall),
+      makeSessionPort(false),
+    );
+
+    await expect(useCase.install()).resolves.toBeUndefined();
+    expect(promptInstall).toHaveBeenCalledTimes(1);
+  });
+
+  /**
+   * UT-2 — Caso 2: rejeição propagada
+   * promptInstall() rejeita → erro propagado sem captura silenciosa
+   */
+  it('propaga rejeição de promptInstall() sem captura silenciosa', async () => {
+    const error = new Error('install cancelado pelo usuário');
+    const promptInstall = jest.fn().mockRejectedValue(error);
+    const useCase = new InstallBannerUseCase(
+      makeInstallPort(true, promptInstall),
+      makeSessionPort(false),
+    );
+
+    await expect(useCase.install()).rejects.toThrow('install cancelado pelo usuário');
+  });
+});
+
+/**
+ * UT-3: InstallBannerUseCase.dismiss()
+ *
+ * Rastreabilidade: REQ-5 · REQ-6
+ */
+describe('InstallBannerUseCase.dismiss()', () => {
+  /**
+   * UT-3 — Caso 1: setFlag chamado com chave e valor corretos
+   * dismiss() deve chamar setFlag('installBannerDismissed', true)
+   */
+  it('chama ISessionPort.setFlag com installBannerDismissed e valor booleano true', () => {
+    const setFlag = jest.fn();
+    const sessionPort: ISessionPort = {
+      getFlag: () => false,
+      setFlag,
+    };
+    const useCase = new InstallBannerUseCase(
+      makeInstallPort(true),
+      sessionPort,
+    );
+
+    useCase.dismiss();
+
+    expect(setFlag).toHaveBeenCalledTimes(1);
+    expect(setFlag).toHaveBeenCalledWith('installBannerDismissed', true);
+  });
+
+  /**
+   * UT-3 — Caso 2: valor booleano, não string
+   * O valor passado para setFlag deve ser o booleano true, não a string 'true'
+   */
+  it('passa o valor booleano true (não a string "true") para setFlag', () => {
+    const setFlag = jest.fn();
+    const sessionPort: ISessionPort = {
+      getFlag: () => false,
+      setFlag,
+    };
+    const useCase = new InstallBannerUseCase(
+      makeInstallPort(true),
+      sessionPort,
+    );
+
+    useCase.dismiss();
+
+    const [, value] = setFlag.mock.calls[0];
+    expect(value).toBe(true);
+    expect(typeof value).toBe('boolean');
   });
 });
