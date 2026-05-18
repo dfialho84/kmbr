@@ -202,7 +202,7 @@
 
 ### T-16: Implementar UpdateBannerUseCase.shouldShowBanner()
 
-- [ ] Criar o método `shouldShowBanner()` no `UpdateBannerUseCase` na camada Domain. O método deve retornar `true` somente quando `IUpdatePort.getUpdateReadiness().status` for `'available'` e `ISessionPort.getFlag('updateBannerDismissed')` for `false`.
+- [x] Criar o método `shouldShowBanner()` no `UpdateBannerUseCase` na camada Domain. O método deve retornar `true` somente quando `IUpdatePort.getUpdateReadiness().status` for `'available'` e `ISessionPort.getFlag('updateBannerDismissed')` for `false`.
 
 **Rastreabilidade:** REQ-7 · REQ-8 · REQ-11 · REQ-12
 **Depende de:** T-01 · T-15
