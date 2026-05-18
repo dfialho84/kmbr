@@ -2,28 +2,27 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-@AGENTS.md
+# Projeto
+
+## Projeto
+
+Aplicação de gerenciamento de corridas para taxistas e motoristas de aplicativo, desenvolvida com a metodologia **SDD (Software Design Documents)** com agentes, comandos e skills localizados em `.claude/`.
+
+## Regras de Implementação
+
+As regras estão em `docs/consitution.md`;
 
 ## Commands
 
-```bash
-npm run dev      # dev server at http://localhost:3000
-npm run build    # production build
-npm run lint     # ESLint (flat config, eslint.config.mjs)
-```
-
-No test runner is configured yet.
+Informações relacionadas à comandos diversos (rodas, construir, testar, etc) estão em `docs/commands.md`
 
 ## Stack
 
-- **Next.js 16.2.6** with App Router — `src/app/`
-- **React 19.2.4**
-- **TypeScript 5**
-- **Tailwind CSS 4** (PostCSS via `@tailwindcss/postcss`)
+As informações relacionadas à Stack de Tecnologias está em `docs/stack.md`
 
 ## Architecture
 
-App Router conventions live under `src/app/`. Routes are folders; `layout.tsx` wraps children, `page.tsx` renders the leaf. Components default to Server Components — add `"use client"` only when browser APIs or React hooks are needed.
+Informações relacionadas à arquitetura do sistema estão em `docs/architecture.md`
 
 ## Important: read docs before coding
 
