@@ -242,7 +242,7 @@
 
 ### T-20: Implementar componente UpdateBanner
 
-- [ ] Criar o componente React `UpdateBanner` na camada de apresentação. O componente deve consumir `useUpdateBanner` e renderizar o banner somente quando `showBanner` for `true`. Deve apresentar os botões com rótulos exatos "Atualizar agora" e "Depois" acessíveis por leitores de tela, conforme `views/banner-atualizacao/tela.md`. Deve suportar os estados: Oculto, Visível, Atualizando e Oculto após "Depois".
+- [x] Criar o componente React `UpdateBanner` na camada de apresentação. O componente deve consumir `useUpdateBanner` e renderizar o banner somente quando `showBanner` for `true`. Deve apresentar os botões com rótulos exatos "Atualizar agora" e "Depois" acessíveis por leitores de tela, conforme `views/banner-atualizacao/tela.md`. Deve suportar os estados: Oculto, Visível, Atualizando e Oculto após "Depois".
 
 **Rastreabilidade:** REQ-7 · REQ-8 · Scenario: "App detecta nova versão e exibe banner de atualização"
 **Depende de:** T-19
