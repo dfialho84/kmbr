@@ -26,7 +26,7 @@
 
 ### T-03: Implementar SerwistServiceWorkerAdapter — registro e captura de beforeinstallprompt
 
-- [ ] Criar o `SerwistServiceWorkerAdapter` na camada de infraestrutura. O adapter deve registrar o Service Worker via Serwist ao inicializar, interceptar o evento `beforeinstallprompt` do navegador e armazenar a referência ao evento em memória. Deve implementar `IInstallPort`, retornando `true` em `isInstallAvailable()` somente após o evento ter sido capturado.
+- [x] Criar o `SerwistServiceWorkerAdapter` na camada de infraestrutura. O adapter deve registrar o Service Worker via Serwist ao inicializar, interceptar o evento `beforeinstallprompt` do navegador e armazenar a referência ao evento em memória. Deve implementar `IInstallPort`, retornando `true` em `isInstallAvailable()` somente após o evento ter sido capturado.
 
 **Rastreabilidade:** REQ-1 · REQ-3
 **Depende de:** T-01
