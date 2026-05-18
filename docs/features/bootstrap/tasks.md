@@ -294,7 +294,7 @@ _Coberto por T-20 (componente não interfere com o conteúdo principal) e T-23 (
 
 ### T-24: Implementar UpdateBannerUseCase.activateUpdate()
 
-- [ ] Criar o método `activateUpdate()` no `UpdateBannerUseCase`. O método deve delegar para `IUpdatePort.activateUpdate()` e aguardar sua resolução; erros devem ser propagados sem captura silenciosa.
+- [x] Criar o método `activateUpdate()` no `UpdateBannerUseCase`. O método deve delegar para `IUpdatePort.activateUpdate()` e aguardar sua resolução; erros devem ser propagados sem captura silenciosa.
 
 **Rastreabilidade:** REQ-9 · REQ-10
 **Depende de:** T-15
@@ -304,7 +304,7 @@ _Coberto por T-20 (componente não interfere com o conteúdo principal) e T-23 (
 
 ### T-25: Implementar SerwistServiceWorkerAdapter.activateUpdate()
 
-- [ ] Adicionar o método `activateUpdate()` ao `SerwistServiceWorkerAdapter`. O método deve enviar `postMessage({ type: 'SKIP_WAITING' })` ao SW em estado `waiting` e escutar o evento `controllerchange` para executar `window.location.reload()` após o SW assumir controle.
+- [x] Adicionar o método `activateUpdate()` ao `SerwistServiceWorkerAdapter`. O método deve enviar `postMessage({ type: 'SKIP_WAITING' })` ao SW em estado `waiting` e escutar o evento `controllerchange` para executar `window.location.reload()` após o SW assumir controle.
 
 **Rastreabilidade:** REQ-9 · REQ-10 · REQ-15
 **Depende de:** T-18
@@ -314,7 +314,7 @@ _Coberto por T-20 (componente não interfere com o conteúdo principal) e T-23 (
 
 ### T-26: Cobrir UT-5 — UpdateBannerUseCase.activateUpdate()
 
-- [ ] Implementar os testes unitários `UT-5` cobrindo os casos de `activateUpdate()`: chamada bem-sucedida a `IUpdatePort.activateUpdate()` e propagação de rejeição sem silenciamento.
+- [x] Implementar os testes unitários `UT-5` cobrindo os casos de `activateUpdate()`: chamada bem-sucedida a `IUpdatePort.activateUpdate()` e propagação de rejeição sem silenciamento.
 
 **Rastreabilidade:** REQ-9 · REQ-10
 **Depende de:** T-24
@@ -324,7 +324,7 @@ _Coberto por T-20 (componente não interfere com o conteúdo principal) e T-23 (
 
 ### T-27: Cobrir GH-4 — Scenario "Usuário clica Atualizar agora e app recarrega"
 
-- [ ] Implementar o teste E2E Gherkin `GH-4` cobrindo todos os steps do Scenario "Usuário clica Atualizar agora e app recarrega". O setup deve incluir SW mock com `postMessage` spy, token de autenticação em `localStorage` e mock de `window.location.reload`. Verificar que `IUpdatePort.activateUpdate()` foi chamado, que o token persiste após reload e que `data-version` no DOM corresponde ao build simulado.
+- [x] Implementar o teste E2E Gherkin `GH-4` cobrindo todos os steps do Scenario "Usuário clica Atualizar agora e app recarrega". O setup deve incluir SW mock com `postMessage` spy, token de autenticação em `localStorage` e mock de `window.location.reload`. Verificar que `IUpdatePort.activateUpdate()` foi chamado, que o token persiste após reload e que `data-version` no DOM corresponde ao build simulado.
 
 **Rastreabilidade:** REQ-9 · REQ-10 · Scenario: "Usuário clica \"Atualizar agora\" e app recarrega"
 **Depende de:** T-20

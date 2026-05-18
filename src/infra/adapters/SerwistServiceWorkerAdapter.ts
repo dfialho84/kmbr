@@ -34,6 +34,14 @@ export class SerwistServiceWorkerAdapter implements IInstallPort, IUpdatePort {
 
   private updateCallbacks: Array<() => void> = [];
 
+  /**
+   * Função de recarga da página. Substituível em testes para evitar reload real.
+   * Em produção, delega a `window.location.reload`.
+   *
+   * @internal — não faz parte da interface pública IUpdatePort
+   */
+  _reloadPage: () => void = () => window.location.reload();
+
   constructor() {
     if (typeof window === 'undefined') {
       return;
@@ -118,7 +126,7 @@ export class SerwistServiceWorkerAdapter implements IInstallPort, IUpdatePort {
       navigator.serviceWorker.addEventListener(
         'controllerchange',
         () => {
-          window.location.reload();
+          this._reloadPage();
           resolve();
         },
         { once: true },

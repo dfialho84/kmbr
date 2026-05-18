@@ -82,6 +82,36 @@ describe('UpdateBannerUseCase.onUpdateAvailable()', () => {
   });
 });
 
+describe('UpdateBannerUseCase.activateUpdate()', () => {
+  // UT-5 — caminho feliz: delega para IUpdatePort.activateUpdate()
+  it('chama IUpdatePort.activateUpdate() e aguarda resolução', async () => {
+    const activateUpdate = jest.fn().mockResolvedValue(undefined);
+    const updatePort: IUpdatePort = {
+      getUpdateReadiness: jest.fn().mockReturnValue({ status: 'idle', waitingSW: null }),
+      onUpdateAvailable: jest.fn(),
+      activateUpdate,
+    };
+    const useCase = new UpdateBannerUseCase(updatePort, makeSessionPort(false));
+
+    await useCase.activateUpdate();
+
+    expect(activateUpdate).toHaveBeenCalledTimes(1);
+  });
+
+  // UT-5 — rejeição propagada sem captura silenciosa
+  it('propaga erro de IUpdatePort.activateUpdate() sem silenciamento', async () => {
+    const error = new Error('SW activation failed');
+    const updatePort: IUpdatePort = {
+      getUpdateReadiness: jest.fn().mockReturnValue({ status: 'idle', waitingSW: null }),
+      onUpdateAvailable: jest.fn(),
+      activateUpdate: jest.fn().mockRejectedValue(error),
+    };
+    const useCase = new UpdateBannerUseCase(updatePort, makeSessionPort(false));
+
+    await expect(useCase.activateUpdate()).rejects.toThrow('SW activation failed');
+  });
+});
+
 describe('UpdateBannerUseCase.shouldShowBanner()', () => {
   // UT-4 — caminho feliz
   it('retorna true quando status é available e banner não foi adiado', () => {

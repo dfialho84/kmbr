@@ -6,8 +6,33 @@ import { UpdateBannerUseCase } from '@/domain/use-cases/UpdateBannerUseCase';
 import { SessionStorageAdapter } from '@/infra/adapters/SessionStorageAdapter';
 import { SerwistServiceWorkerAdapter } from '@/infra/adapters/SerwistServiceWorkerAdapter';
 
+/**
+ * Retorna o adapter existente em `window.__swUpdateAdapter` (se houver) ou cria
+ * um novo. Isso garante que:
+ * - Múltiplas invocações no mesmo contexto de janela (StrictMode) reutilizem o
+ *   mesmo adapter.
+ * - Cada nova janela/visita Cypress receba um adapter fresco (o campo
+ *   `__swUpdateAdapter` não existe na nova janela).
+ *
+ * @internal
+ */
+function getOrCreateUpdateAdapter(): SerwistServiceWorkerAdapter {
+  if (typeof window === 'undefined') {
+    return new SerwistServiceWorkerAdapter();
+  }
+
+  type SwAdapterWindow = Window & { __swUpdateAdapter?: SerwistServiceWorkerAdapter };
+  const typedWin = window as SwAdapterWindow;
+
+  if (!typedWin.__swUpdateAdapter) {
+    typedWin.__swUpdateAdapter = new SerwistServiceWorkerAdapter();
+  }
+
+  return typedWin.__swUpdateAdapter;
+}
+
 function createUseCase(): UpdateBannerUseCase {
-  const updateAdapter = new SerwistServiceWorkerAdapter();
+  const updateAdapter = getOrCreateUpdateAdapter();
   const sessionAdapter = new SessionStorageAdapter();
   return new UpdateBannerUseCase(updateAdapter, sessionAdapter);
 }
