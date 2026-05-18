@@ -17,6 +17,32 @@ function makeSessionPort(dismissed: boolean): ISessionPort {
   };
 }
 
+describe('UpdateBannerUseCase.defer()', () => {
+  // UT-6 — setFlag chamado com valor correto
+  it('chama ISessionPort.setFlag com updateBannerDismissed e true', () => {
+    const updatePort = makeUpdatePort('idle');
+    const sessionPort = makeSessionPort(false);
+    const useCase = new UpdateBannerUseCase(updatePort, sessionPort);
+
+    useCase.defer();
+
+    expect(sessionPort.setFlag).toHaveBeenCalledTimes(1);
+    expect(sessionPort.setFlag).toHaveBeenCalledWith('updateBannerDismissed', true);
+  });
+
+  // UT-6 — nenhum método de IUpdatePort chamado
+  it('não chama nenhum método de IUpdatePort', () => {
+    const updatePort = makeUpdatePort('available');
+    const sessionPort = makeSessionPort(false);
+    const useCase = new UpdateBannerUseCase(updatePort, sessionPort);
+
+    useCase.defer();
+
+    expect(updatePort.activateUpdate).not.toHaveBeenCalled();
+    expect(updatePort.onUpdateAvailable).not.toHaveBeenCalled();
+  });
+});
+
 describe('UpdateBannerUseCase.onUpdateAvailable()', () => {
   // UT-7 — callback chamado quando port dispara com flag false
   it('propaga o evento quando updateBannerDismissed é false', () => {

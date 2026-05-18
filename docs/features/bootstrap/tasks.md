@@ -346,7 +346,7 @@ _Coberto por T-25 (activateUpdate preserva sessão via cookie/token existente) e
 
 ### T-28: Implementar UpdateBannerUseCase.defer()
 
-- [ ] Criar o método `defer()` no `UpdateBannerUseCase`. O método deve chamar `ISessionPort.setFlag('updateBannerDismissed', true)` sem invocar nenhum método de `IUpdatePort` (o SW em waiting permanece inalterado).
+- [x] Criar o método `defer()` no `UpdateBannerUseCase`. O método deve chamar `ISessionPort.setFlag('updateBannerDismissed', true)` sem invocar nenhum método de `IUpdatePort` (o SW em waiting permanece inalterado).
 
 **Rastreabilidade:** REQ-11 · REQ-12
 **Depende de:** T-01 · T-15
@@ -356,7 +356,7 @@ _Coberto por T-25 (activateUpdate preserva sessão via cookie/token existente) e
 
 ### T-29: Cobrir UT-6 — UpdateBannerUseCase.defer()
 
-- [ ] Implementar os testes unitários `UT-6` cobrindo os casos de `defer()`: setFlag chamado com `'updateBannerDismissed'` e `true`; nenhum método de `IUpdatePort` chamado.
+- [x] Implementar os testes unitários `UT-6` cobrindo os casos de `defer()`: setFlag chamado com `'updateBannerDismissed'` e `true`; nenhum método de `IUpdatePort` chamado.
 
 **Rastreabilidade:** REQ-11 · REQ-12
 **Depende de:** T-28
