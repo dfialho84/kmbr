@@ -46,7 +46,7 @@
 
 ### T-05: Implementar componente InstallBanner
 
-- [ ] Criar o componente React `InstallBanner` na camada de apresentação. O componente deve consumir `useInstallBanner` e renderizar o banner de instalação somente quando `showBanner` for `true`. Deve apresentar os botões com rótulos exatos "Instalar" e "Descartar" acessíveis por leitores de tela (atributos `aria-label` ou rótulo textual explícito), conforme `views/banner-pwa/tela.md`. O componente deve suportar os estados: Oculto, Visível, Instalando e Oculto após descartar.
+- [x] Criar o componente React `InstallBanner` na camada de apresentação. O componente deve consumir `useInstallBanner` e renderizar o banner de instalação somente quando `showBanner` for `true`. Deve apresentar os botões com rótulos exatos "Instalar" e "Descartar" acessíveis por leitores de tela (atributos `aria-label` ou rótulo textual explícito), conforme `views/banner-pwa/tela.md`. O componente deve suportar os estados: Oculto, Visível, Instalando e Oculto após descartar.
 
 **Rastreabilidade:** REQ-1 · REQ-2 · Scenario: "Usuário instala o app como PWA via banner"
 **Depende de:** T-04

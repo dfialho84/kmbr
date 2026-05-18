@@ -9,13 +9,18 @@ const config: Config = {
   testMatch: [
     '**/__tests__/**/*.spec.ts',
     '**/__tests__/**/*.test.ts',
+    '**/__tests__/**/*.spec.tsx',
+    '**/__tests__/**/*.test.tsx',
     '**/*.spec.ts',
     '**/*.test.ts',
+    '**/*.spec.tsx',
+    '**/*.test.tsx',
   ],
   transform: {
     '^.+\\.tsx?$': ['ts-jest', {
       tsconfig: {
         module: 'commonjs',
+        jsx: 'react-jsx',
       },
     }],
   },
