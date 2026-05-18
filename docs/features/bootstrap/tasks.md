@@ -6,7 +6,7 @@
 
 ### T-01: Definir interfaces IInstallPort e ISessionPort
 
-- [ ] Criar as interfaces TypeScript `IInstallPort` e `ISessionPort` na camada Domain. `IInstallPort` deve declarar `isInstallAvailable(): boolean` e `promptInstall(): Promise<void>`. `ISessionPort` deve declarar `getFlag(key: string): boolean` e `setFlag(key: string, value: boolean): void`. Nenhuma dependência de Web API ou framework deve ser importada nessas interfaces.
+- [x] Criar as interfaces TypeScript `IInstallPort` e `ISessionPort` na camada Domain. `IInstallPort` deve declarar `isInstallAvailable(): boolean` e `promptInstall(): Promise<void>`. `ISessionPort` deve declarar `getFlag(key: string): boolean` e `setFlag(key: string, value: boolean): void`. Nenhuma dependência de Web API ou framework deve ser importada nessas interfaces.
 
 **Rastreabilidade:** REQ-1 · REQ-3 · REQ-5 · REQ-6
 **Depende de:** —
@@ -16,7 +16,7 @@
 
 ### T-02: Implementar InstallBannerUseCase.shouldShowBanner()
 
-- [ ] Criar o método `shouldShowBanner()` no `InstallBannerUseCase` na camada Domain. O método deve retornar `true` somente quando `IInstallPort.isInstallAvailable()` for `true` e `ISessionPort.getFlag('installBannerDismissed')` for `false`; caso contrário retorna `false`.
+- [x] Criar o método `shouldShowBanner()` no `InstallBannerUseCase` na camada Domain. O método deve retornar `true` somente quando `IInstallPort.isInstallAvailable()` for `true` e `ISessionPort.getFlag('installBannerDismissed')` for `false`; caso contrário retorna `false`.
 
 **Rastreabilidade:** REQ-1 · REQ-6 · REQ-22
 **Depende de:** T-01
