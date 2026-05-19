@@ -508,7 +508,7 @@ _Coberto por T-25 (activateUpdate dispara reload somente após confirmação exp
 
 ### T-41: Implementar componente OfflineIndicator
 
-- [ ] Criar o componente React `OfflineIndicator` na camada de apresentação. O componente deve consumir `useOfflineStatus` e renderizar o badge com rótulo textual exato `"Offline"` na barra de navegação ou header somente quando `isOnline = false`. O rótulo deve ter atributo de acessibilidade `aria-label` ou `role="status"` identificável por leitores de tela, conforme `views/indicador-offline/tela.md`. Não deve depender apenas de cor ou ícone para comunicar o estado.
+- [x] Criar o componente React `OfflineIndicator` na camada de apresentação. O componente deve consumir `useOfflineStatus` e renderizar o badge com rótulo textual exato `"Offline"` na barra de navegação ou header somente quando `isOnline = false`. O rótulo deve ter atributo de acessibilidade `aria-label` ou `role="status"` identificável por leitores de tela, conforme `views/indicador-offline/tela.md`. Não deve depender apenas de cor ou ícone para comunicar o estado.
 
 **Rastreabilidade:** REQ-18 · REQ-19 · Scenario: "App exibe indicador visual de modo offline"
 **Depende de:** T-40
