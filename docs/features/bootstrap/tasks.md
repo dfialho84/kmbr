@@ -57,12 +57,12 @@
 ### T-05: Implementar componente InstallBanner com Dialog do shadcn/ui
 
 - [x] Criar o componente React `InstallBanner` na camada de apresentação usando o componente `Dialog` do shadcn/ui. O componente deve consumir `useInstallBanner` e abrir o Dialog somente quando `showBanner` for `true`. O Dialog deve ter:
-  - Título: **"Instalar aplicativo"** (em `DialogTitle`)
-  - Corpo: texto explicativo sobre os benefícios da instalação (em `DialogDescription`)
-  - Botão primário com rótulo exato **"Instalar"** (variant `default`) que chama `onInstall`
-  - Botão secundário com rótulo exato **"Agora não"** (variant `ghost` ou `outline`) que chama `onDismiss`
-  - Fechar via ESC ou clique fora do Dialog fecha silenciosamente (chama apenas `onDismiss` no handler `onOpenChange`) **sem** salvar a flag `installBannerDismissed` — o banner reaparece na próxima visita
-  - Botão "Agora não" clicado chama `onDismiss` normalmente (salva a flag e oculta na sessão corrente)
+    - Título: **"Instalar aplicativo"** (em `DialogTitle`)
+    - Corpo: texto explicativo sobre os benefícios da instalação (em `DialogDescription`)
+    - Botão primário com rótulo exato **"Instalar"** (variant `default`) que chama `onInstall`
+    - Botão secundário com rótulo exato **"Agora não"** (variant `ghost` ou `outline`) que chama `onDismiss`
+    - Fechar via ESC ou clique fora do Dialog fecha silenciosamente (chama apenas `onDismiss` no handler `onOpenChange`) **sem** salvar a flag `installBannerDismissed` — o banner reaparece na próxima visita
+    - Botão "Agora não" clicado chama `onDismiss` normalmente (salva a flag e oculta na sessão corrente)
 
 **Rastreabilidade:** REQ-1 · REQ-2 · Scenario: "Usuário instala o app como PWA via banner"
 **Depende de:** T-04 · T-62
@@ -77,12 +77,12 @@
 ### T-06: Cobrir GH-1 — Scenario "Usuário instala o app como PWA via banner"
 
 - [x] Implementar o teste E2E Gherkin `GH-1` cobrindo todos os steps do Scenario "Usuário instala o app como PWA via banner". O setup deve mockar o evento `beforeinstallprompt` com `prompt()` resolvendo `{ outcome: 'accepted' }`, limpar `sessionStorage` antes do teste. Os steps devem verificar:
-  - O Dialog do shadcn/ui está **aberto** (presença de `[role="dialog"]` no DOM)
-  - O título "Instalar aplicativo" está visível dentro do Dialog
-  - Os botões "Instalar" e "Agora não" existem no DOM com os textos exatos
-  - `IInstallPort.promptInstall()` é chamado ao clicar "Instalar"
-  - Após clicar "Instalar", o Dialog é **fechado** (`[role="dialog"]` some do DOM)
-  - O mock de `window.matchMedia('(display-mode: standalone)')` retorna `true`
+    - O Dialog do shadcn/ui está **aberto** (presença de `[role="dialog"]` no DOM)
+    - O título "Instalar aplicativo" está visível dentro do Dialog
+    - Os botões "Instalar" e "Agora não" existem no DOM com os textos exatos
+    - `IInstallPort.promptInstall()` é chamado ao clicar "Instalar"
+    - Após clicar "Instalar", o Dialog é **fechado** (`[role="dialog"]` some do DOM)
+    - O mock de `window.matchMedia('(display-mode: standalone)')` retorna `true`
 
 **Rastreabilidade:** REQ-1 · REQ-2 · REQ-3 · REQ-4 · Scenario: "Usuário instala o app como PWA via banner"
 **Depende de:** T-05
@@ -622,7 +622,7 @@ _Coberto por T-41 (componente reage a `isOnline = true` removendo o badge) e T-4
 
 ### T-50: Cobrir PT-1 — Benchmark de tempo de inicialização com cache (p95 ≤ 3000ms)
 
-- [ ] Implementar o teste de performance `PT-1` medindo a latência de inicialização completa do app com assets servidos do Cache API. O benchmark deve executar 50 iterações com Cache API mockado respondendo instantaneamente, medir o intervalo via `performance.mark` e `performance.measure` e verificar que o p95 está em ≤ 3000ms.
+- [x] Implementar o teste de performance `PT-1` medindo a latência de inicialização completa do app com assets servidos do Cache API. O benchmark deve executar 50 iterações com Cache API mockado respondendo instantaneamente, medir o intervalo via `performance.mark` e `performance.measure` e verificar que o p95 está em ≤ 3000ms.
 
 **Rastreabilidade:** NFR-1 · Scenario: "App inicializa rapidamente via cache estratégico"
 **Depende de:** T-45
@@ -634,7 +634,7 @@ _Coberto por T-41 (componente reage a `isOnline = true` removendo o badge) e T-4
 
 ### T-51: Cobrir PT-2 — Benchmark de atraso de verificação de versão (≤ 100ms)
 
-- [ ] Implementar o teste de performance `PT-2` medindo o atraso introduzido pelo ciclo de verificação de nova versão sobre eventos de interação. O benchmark deve executar 30 iterações comparando tempo de resposta a click com e sem verificação ativa e verificar que o delta é ≤ 100ms na mediana.
+- [x] Implementar o teste de performance `PT-2` medindo o atraso introduzido pelo ciclo de verificação de nova versão sobre eventos de interação. O benchmark deve executar 30 iterações comparando tempo de resposta a click com e sem verificação ativa e verificar que o delta é ≤ 100ms na mediana.
 
 **Rastreabilidade:** NFR-2
 **Depende de:** T-32
