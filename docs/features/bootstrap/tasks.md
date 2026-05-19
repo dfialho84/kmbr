@@ -560,7 +560,7 @@ _Coberto por T-41 (componente reage a `isOnline = true` removendo o badge) e T-4
 
 ### T-45: Configurar precache de assets estáticos via Serwist na primeira execução
 
-- [ ] Configurar o Serwist para realizar precache de todos os assets estáticos (HTML, CSS, JavaScript, fontes, ícones) durante a instalação do Service Worker. A configuração deve usar a integração nativa de Serwist com Next.js App Router.
+- [x] Configurar o Serwist para realizar precache de todos os assets estáticos (HTML, CSS, JavaScript, fontes, ícones) durante a instalação do Service Worker. A configuração deve usar a integração nativa de Serwist com Next.js App Router.
 
 **Rastreabilidade:** REQ-20 · REQ-21 · NFR-1
 **Depende de:** T-03
