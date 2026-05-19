@@ -488,7 +488,7 @@ _Coberto por T-25 (activateUpdate dispara reload somente após confirmação exp
 
 ### T-39: Implementar NetworkStatusAdapter
 
-- [ ] Criar o `NetworkStatusAdapter` na camada de infraestrutura implementando `INetworkPort`. O adapter deve ler `navigator.onLine` em `isOnline()` e registrar listeners nos eventos `online` e `offline` do `window` em `onStatusChange()`, notificando todos os callbacks registrados com o valor booleano correspondente.
+- [x] Criar o `NetworkStatusAdapter` na camada de infraestrutura implementando `INetworkPort`. O adapter deve ler `navigator.onLine` em `isOnline()` e registrar listeners nos eventos `online` e `offline` do `window` em `onStatusChange()`, notificando todos os callbacks registrados com o valor booleano correspondente.
 
 **Rastreabilidade:** REQ-17 · REQ-18 · REQ-19
 **Depende de:** T-36
