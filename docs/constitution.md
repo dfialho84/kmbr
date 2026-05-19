@@ -16,6 +16,8 @@ Este documento define as regras tecnicas nao-negociaveis que governam todas as i
 - Os princípios SOLID (SRP, OCP, LSP, ISP, DIP) devem ser aplicados sempre que pertinentes ao contexto da implementação — nenhum princípio deve ser ignorado sem justificativa explícita.
 - Testes são escritos **antes** do código de produção (TDD red→green).
 - Toda task deve ter rastreabilidade a um requisito funcional, story ou cenário BDD em `docs/`.
+- Todos os testes e2e ou GH devem ser feitos usando Cypress com Cucumber
+- Todos os testes de performance ou PT devem ser feitos com k6.
 
 ---
 

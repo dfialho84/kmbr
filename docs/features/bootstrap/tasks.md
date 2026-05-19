@@ -646,7 +646,7 @@ _Coberto por T-41 (componente reage a `isOnline = true` removendo o badge) e T-4
 
 ### T-52: Configurar ExpirationPlugin do Serwist com limite de 50 MB e estratégia FIFO
 
-- [ ] Configurar o `ExpirationPlugin` do Serwist no `SerwistServiceWorkerAdapter` com limite máximo de 50 MB e estratégia de evicção FIFO. A limpeza automática deve ser executada antes de adicionar novos assets quando o limite é atingido.
+- [x] Configurar o `ExpirationPlugin` do Serwist no `SerwistServiceWorkerAdapter` com limite máximo de 50 MB e estratégia de evicção FIFO. A limpeza automática deve ser executada antes de adicionar novos assets quando o limite é atingido.
 
 **Rastreabilidade:** NFR-4
 **Depende de:** T-33 · T-34
@@ -656,7 +656,7 @@ _Coberto por T-41 (componente reage a `isOnline = true` removendo o badge) e T-4
 
 ### T-53: Cobrir PT-3 — Benchmark de limpeza de cache (≤ 2000ms)
 
-- [ ] Implementar o teste de performance `PT-3` medindo o tempo de execução da limpeza de cache FIFO com Cache API mockado contendo 50, 100 e 200 entradas. O benchmark deve executar 20 iterações e verificar que a operação de limpeza conclui em ≤ 2000ms.
+- [x] Implementar o teste de performance `PT-3` medindo o tempo de execução da limpeza de cache FIFO com Cache API mockado contendo 50, 100 e 200 entradas. O benchmark deve executar 20 iterações e verificar que a operação de limpeza conclui em ≤ 2000ms.
 
 **Rastreabilidade:** NFR-4
 **Depende de:** T-52
