@@ -608,7 +608,7 @@ _Coberto por T-41 (componente reage a `isOnline = true` removendo o badge) e T-4
 
 ### T-49: Cobrir GH-10 — Scenario "Navegador sem suporte PWA funciona como web app tradicional"
 
-- [ ] Implementar o teste E2E Gherkin `GH-10` cobrindo todos os steps do Scenario "Navegador sem suporte PWA funciona como web app tradicional". O setup deve garantir que `beforeinstallprompt` nunca é disparado e `navigator.serviceWorker` está ausente ou sem suporte a install. Verificar ausência de `InstallBanner` no DOM, ausência de erros de console relacionados a PWA e funcionamento normal das rotas principais.
+- [x] Implementar o teste E2E Gherkin `GH-10` cobrindo todos os steps do Scenario "Navegador sem suporte PWA funciona como web app tradicional". O setup deve garantir que `beforeinstallprompt` nunca é disparado e `navigator.serviceWorker` está ausente ou sem suporte a install. Verificar ausência de `InstallBanner` no DOM, ausência de erros de console relacionados a PWA e funcionamento normal das rotas principais.
 
 **Rastreabilidade:** REQ-22 · NFR-5 · Scenario: "Navegador sem suporte PWA funciona como web app tradicional"
 **Depende de:** T-48
