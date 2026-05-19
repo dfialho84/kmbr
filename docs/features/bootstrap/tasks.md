@@ -498,7 +498,7 @@ _Coberto por T-25 (activateUpdate dispara reload somente após confirmação exp
 
 ### T-40: Implementar hook useOfflineStatus
 
-- [ ] Criar o hook React `useOfflineStatus` na camada de apresentação. O hook deve instanciar `NetworkStatusAdapter` e `OfflineStatusUseCase` e expor `isOnline` booleano para consumo pelo componente `OfflineIndicator`.
+- [x] Criar o hook React `useOfflineStatus` na camada de apresentação. O hook deve instanciar `NetworkStatusAdapter` e `OfflineStatusUseCase` e expor `isOnline` booleano para consumo pelo componente `OfflineIndicator`.
 
 **Rastreabilidade:** REQ-17 · REQ-18 · REQ-19
 **Depende de:** T-37 · T-39
@@ -518,7 +518,7 @@ _Coberto por T-25 (activateUpdate dispara reload somente após confirmação exp
 
 ### T-42: Cobrir UT-8 — OfflineStatusUseCase — inicialização e reação a mudanças
 
-- [ ] Implementar os testes unitários `UT-8` cobrindo os três casos de `OfflineStatusUseCase`: estado inicial reflete `INetworkPort.isOnline()`, callback offline propaga `isOnline = false`, callback online propaga `isOnline = true`.
+- [x] Implementar os testes unitários `UT-8` cobrindo os três casos de `OfflineStatusUseCase`: estado inicial reflete `INetworkPort.isOnline()`, callback offline propaga `isOnline = false`, callback online propaga `isOnline = true`.
 
 **Rastreabilidade:** REQ-17 · REQ-18 · REQ-19
 **Depende de:** T-37
@@ -528,7 +528,7 @@ _Coberto por T-25 (activateUpdate dispara reload somente após confirmação exp
 
 ### T-43: Cobrir IT-2 — NetworkStatusAdapter
 
-- [ ] Implementar os testes de integração `IT-2` cobrindo os quatro casos de `NetworkStatusAdapter`: estado inicial, evento offline, evento online e múltiplos callbacks notificados. Usar `navigator.onLine` via `Object.defineProperty` e `window.dispatchEvent` para disparar eventos reais do JSDOM.
+- [x] Implementar os testes de integração `IT-2` cobrindo os quatro casos de `NetworkStatusAdapter`: estado inicial, evento offline, evento online e múltiplos callbacks notificados. Usar `navigator.onLine` via `Object.defineProperty` e `window.dispatchEvent` para disparar eventos reais do JSDOM.
 
 **Rastreabilidade:** REQ-17 · REQ-18 · REQ-19
 **Depende de:** T-39
