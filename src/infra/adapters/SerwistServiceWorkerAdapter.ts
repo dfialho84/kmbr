@@ -117,6 +117,11 @@ export class SerwistServiceWorkerAdapter implements IInstallPort, IUpdatePort {
    */
   onUpdateAvailable(callback: () => void): void {
     this.updateCallbacks.push(callback);
+    // Se a atualização já foi detectada antes deste callback ser registrado
+    // (race condition com useEffect), notifica imediatamente.
+    if (this.updateReadiness.status === 'available') {
+      callback();
+    }
   }
 
   /**
@@ -151,18 +156,8 @@ export class SerwistServiceWorkerAdapter implements IInstallPort, IUpdatePort {
   // ---------------------------------------------------------------------------
 
   private registerServiceWorker(): void {
-    if (!('serviceWorker' in navigator)) {
-      // Graceful degradation — REQ-22
-      return;
-    }
-
-    // O registro efetivo ocorre via @serwist/next no arquivo de SW gerado
-    // pelo build do Next.js. Aqui apenas garantimos que o módulo é importado
-    // no lado cliente quando o ambiente suporta.
-    import('@serwist/next/worker').catch(() => {
-      // Falha silenciosa — ausência do arquivo de SW em dev não deve
-      // interromper o app. O arquivo só existe após `next build`.
-    });
+    // O @serwist/next registra o SW automaticamente via script injetado no build.
+    // Nenhuma ação extra necessária aqui.
   }
 
   private listenForInstallPrompt(): void {

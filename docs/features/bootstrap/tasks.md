@@ -408,7 +408,7 @@ _Coberto por T-25 (activateUpdate preserva sessão via cookie/token existente) e
 
 ### T-33: Configurar estratégia de cache Serwist — cache-first para assets imutáveis
 
-- [ ] Configurar o Serwist para aplicar a estratégia cache-first para assets estáticos imutáveis (CSS, JS versionados, fontes, ícones) no Service Worker. O download de novo build ao detectar atualização deve ocorrer em background sem bloquear a UI ou sessão atual.
+- [x] Configurar o Serwist para aplicar a estratégia cache-first para assets estáticos imutáveis (CSS, JS versionados, fontes, ícones) no Service Worker. O download de novo build ao detectar atualização deve ocorrer em background sem bloquear a UI ou sessão atual.
 
 **Rastreabilidade:** REQ-14 · REQ-20 · NFR-1 · NFR-2
 **Depende de:** T-03
