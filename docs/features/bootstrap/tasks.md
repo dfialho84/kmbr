@@ -574,7 +574,7 @@ _Coberto por T-41 (componente reage a `isOnline = true` removendo o badge) e T-4
 
 ### T-46: Configurar invalidação automática de cache na ativação de nova versão
 
-- [ ] Configurar o `SerwistServiceWorkerAdapter` para remover caches de versões anteriores durante a ativação de um novo Service Worker. A chave de cache deve incluir o hash/versão do build para garantir isolamento entre versões.
+- [x] Configurar o `SerwistServiceWorkerAdapter` para remover caches de versões anteriores durante a ativação de um novo Service Worker. A chave de cache deve incluir o hash/versão do build para garantir isolamento entre versões.
 
 **Rastreabilidade:** REQ-21 · NFR-4
 **Depende de:** T-45
