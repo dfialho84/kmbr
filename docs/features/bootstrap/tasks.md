@@ -464,7 +464,7 @@ _Coberto por T-25 (activateUpdate dispara reload somente após confirmação exp
 
 ### T-37: Implementar OfflineStatusUseCase
 
-- [ ] Criar o `OfflineStatusUseCase` na camada Domain. O caso de uso deve expor o estado atual de conectividade via `INetworkPort.isOnline()` na inicialização e reagir a mudanças propagando `isOnline = false` e `isOnline = true` via callback quando `INetworkPort.onStatusChange()` disparar.
+- [x] Criar o `OfflineStatusUseCase` na camada Domain. O caso de uso deve expor o estado atual de conectividade via `INetworkPort.isOnline()` na inicialização e reagir a mudanças propagando `isOnline = false` e `isOnline = true` via callback quando `INetworkPort.onStatusChange()` disparar.
 
 **Rastreabilidade:** REQ-17 · REQ-18 · REQ-19
 **Depende de:** T-36
