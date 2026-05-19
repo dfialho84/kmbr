@@ -162,6 +162,92 @@ describe('SerwistServiceWorkerAdapter — IT-3', () => {
   });
 });
 
+/**
+ * T-48: Detecção de suporte PWA e graceful degradation
+ *
+ * Rastreabilidade: REQ-22 · NFR-5
+ *
+ * Garante que quando `'serviceWorker' in navigator` é false o adapter:
+ *   - Não registra SW
+ *   - Não intercepta beforeinstallprompt
+ *   - Mantém isInstallAvailable() = false
+ *   - Não lança erros nem emite console warnings/errors relacionados a PWA
+ */
+describe('SerwistServiceWorkerAdapter — T-48: Graceful degradation sem suporte PWA', () => {
+  let originalDescriptor: PropertyDescriptor | undefined;
+
+  beforeEach(() => {
+    // Remove navigator.serviceWorker para simular navegador sem suporte
+    originalDescriptor = Object.getOwnPropertyDescriptor(navigator, 'serviceWorker');
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    delete (navigator as any).serviceWorker;
+  });
+
+  afterEach(() => {
+    // Restaura navigator.serviceWorker original
+    if (originalDescriptor) {
+      Object.defineProperty(navigator, 'serviceWorker', originalDescriptor);
+    }
+    jest.restoreAllMocks();
+  });
+
+  /**
+   * T-48 — Caso 1: isInstallAvailable() retorna false sem suporte a ServiceWorker
+   */
+  it('isInstallAvailable() retorna false em navegador sem suporte a ServiceWorker', () => {
+    expect('serviceWorker' in navigator).toBe(false);
+
+    const adapter = new SerwistServiceWorkerAdapter();
+
+    expect(adapter.isInstallAvailable()).toBe(false);
+  });
+
+  /**
+   * T-48 — Caso 2: Nenhum erro é lançado durante a construção
+   */
+  it('não lança erros durante a construção em ambiente sem ServiceWorker', () => {
+    expect(() => new SerwistServiceWorkerAdapter()).not.toThrow();
+  });
+
+  /**
+   * T-48 — Caso 3: Nenhum console.error ou console.warn é emitido
+   */
+  it('não emite console.error nem console.warn durante a construção sem ServiceWorker', () => {
+    const consoleError = jest.spyOn(console, 'error').mockImplementation(() => {});
+    const consoleWarn = jest.spyOn(console, 'warn').mockImplementation(() => {});
+
+    new SerwistServiceWorkerAdapter();
+
+    expect(consoleError).not.toHaveBeenCalled();
+    expect(consoleWarn).not.toHaveBeenCalled();
+  });
+
+  /**
+   * T-48 — Caso 4: evento beforeinstallprompt disparado não altera isInstallAvailable()
+   * Garante que o listener não foi registrado (não há side-effect mesmo se o evento
+   * fosse disparado por algum motivo externo)
+   */
+  it('isInstallAvailable() permanece false mesmo após beforeinstallprompt ser disparado', () => {
+    const adapter = new SerwistServiceWorkerAdapter();
+
+    // Simula disparo do evento mesmo sem suporte oficial
+    const event = new Event('beforeinstallprompt', { bubbles: true, cancelable: true });
+    window.dispatchEvent(event);
+
+    expect(adapter.isInstallAvailable()).toBe(false);
+  });
+
+  /**
+   * T-48 — Caso 5: getUpdateReadiness() retorna status 'idle' sem suporte a ServiceWorker
+   */
+  it('getUpdateReadiness() retorna status idle em ambiente sem ServiceWorker', () => {
+    const adapter = new SerwistServiceWorkerAdapter();
+
+    expect(adapter.getUpdateReadiness().status).toBe('idle');
+    expect(adapter.getUpdateReadiness().waitingSW).toBeNull();
+  });
+});
+
 describe('SerwistServiceWorkerAdapter — IT-4', () => {
   afterEach(() => {
     jest.restoreAllMocks();

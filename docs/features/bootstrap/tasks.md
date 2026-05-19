@@ -598,7 +598,7 @@ _Coberto por T-41 (componente reage a `isOnline = true` removendo o badge) e T-4
 
 ### T-48: Implementar detecção de suporte PWA e graceful degradation
 
-- [ ] Garantir que o `SerwistServiceWorkerAdapter` detecte ausência de suporte a `serviceWorker` (`'serviceWorker' in navigator` = `false`) e não registre o SW nem intercepte `beforeinstallprompt`, mantendo `isInstallAvailable()` retornando `false` sem emitir erros ou console warnings relacionados a PWA.
+- [x] Garantir que o `SerwistServiceWorkerAdapter` detecte ausência de suporte a `serviceWorker` (`'serviceWorker' in navigator` = `false`) e não registre o SW nem intercepte `beforeinstallprompt`, mantendo `isInstallAvailable()` retornando `false` sem emitir erros ou console warnings relacionados a PWA.
 
 **Rastreabilidade:** REQ-22 · NFR-5
 **Depende de:** T-03

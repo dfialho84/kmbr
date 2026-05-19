@@ -59,6 +59,14 @@ export class SerwistServiceWorkerAdapter implements IInstallPort, IUpdatePort {
       return;
     }
 
+    // Graceful degradation: navegadores sem suporte a Service Worker não recebem
+    // nenhuma tentativa de registro, intercepção de beforeinstallprompt ou
+    // detecção de atualização — isInstallAvailable() permanece false e nenhum
+    // erro é emitido. (REQ-22 · NFR-5)
+    if (!('serviceWorker' in navigator)) {
+      return;
+    }
+
     this.registerServiceWorker();
     this.listenForInstallPrompt();
     this.listenForSWWaiting();
