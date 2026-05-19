@@ -584,7 +584,7 @@ _Coberto por T-41 (componente reage a `isOnline = true` removendo o badge) e T-4
 
 ### T-47: Cobrir GH-9 — Scenario "App inicializa rapidamente via cache estratégico"
 
-- [ ] Implementar o teste E2E Gherkin `GH-9` cobrindo todos os steps do Scenario "App inicializa rapidamente via cache estratégico". O setup deve incluir Cache API mockado com respostas instantâneas, `performance` API disponível, `navigator.connection.effectiveType = '4g'` e spy em `caches.delete()`. Verificar tempo de mount, chamadas ao Cache API antes de fetch de rede e limpeza de cache ao simular nova versão.
+- [x] Implementar o teste E2E Gherkin `GH-9` cobrindo todos os steps do Scenario "App inicializa rapidamente via cache estratégico". O setup deve incluir Cache API mockado com respostas instantâneas, `performance` API disponível, `navigator.connection.effectiveType = '4g'` e spy em `caches.delete()`. Verificar tempo de mount, chamadas ao Cache API antes de fetch de rede e limpeza de cache ao simular nova versão.
 
 **Rastreabilidade:** REQ-21 · NFR-1 · NFR-2 · Scenario: "App inicializa rapidamente via cache estratégico"
 **Depende de:** T-45 · T-46
