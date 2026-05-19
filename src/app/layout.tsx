@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { InstallBanner } from "@/presentation/components/InstallBanner";
+import { OfflineIndicator } from "@/presentation/components/OfflineIndicator";
 import { UpdateBanner } from "@/presentation/components/UpdateBanner";
 import "./globals.css";
 
@@ -36,6 +37,7 @@ export default function RootLayout({
       >
         <InstallBanner />
         <UpdateBanner />
+        <OfflineIndicator />
         {children}
       </body>
     </html>

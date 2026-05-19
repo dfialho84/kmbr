@@ -29,9 +29,12 @@ export class NetworkStatusAdapter implements INetworkPort {
 
   /**
    * Retorna `true` se `navigator.onLine` for verdadeiro no momento da chamada.
+   *
+   * Retorna `true` como padrão seguro em ambientes SSR onde `navigator.onLine`
+   * pode ser `undefined` (Node.js 22+ expõe `navigator` mas sem `onLine`).
    */
   isOnline(): boolean {
-    if (typeof navigator === 'undefined') {
+    if (typeof navigator === 'undefined' || typeof navigator.onLine !== 'boolean') {
       return true;
     }
     return navigator.onLine;

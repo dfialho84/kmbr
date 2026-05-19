@@ -474,7 +474,7 @@ _Coberto por T-25 (activateUpdate dispara reload somente após confirmação exp
 
 ### T-38: Cobrir GH-7 — Scenario "App funciona offline com assets em cache"
 
-- [ ] Implementar o teste E2E Gherkin `GH-7` cobrindo todos os steps do Scenario "App funciona offline com assets em cache". O setup deve incluir Cache API mockado com assets pré-populados, `navigator.onLine = false` e evento `offline` disparado. Verificar que componentes de UI renderizam sem erros, que dados em cache são exibidos e que ao restaurar a conexão o indicador offline desaparece.
+- [x] Implementar o teste E2E Gherkin `GH-7` cobrindo todos os steps do Scenario "App funciona offline com assets em cache". O setup deve incluir Cache API mockado com assets pré-populados, `navigator.onLine = false` e evento `offline` disparado. Verificar que componentes de UI renderizam sem erros, que dados em cache são exibidos e que ao restaurar a conexão o indicador offline desaparece.
 
 **Rastreabilidade:** REQ-14 · REQ-17 · REQ-20 · REQ-21 · NFR-3 · Scenario: "App funciona offline com assets em cache"
 **Depende de:** T-41 · T-33 · T-34
@@ -538,7 +538,7 @@ _Coberto por T-25 (activateUpdate dispara reload somente após confirmação exp
 
 ### T-44: Cobrir GH-8 — Scenario "App exibe indicador visual de modo offline"
 
-- [ ] Implementar o teste E2E Gherkin `GH-8` cobrindo todos os steps do Scenario "App exibe indicador visual de modo offline". Verificar presença de elemento com texto `"Offline"` no header/nav com atributos de acessibilidade, e que o indicador some ao disparar evento `online` com `navigator.onLine = true`.
+- [x] Implementar o teste E2E Gherkin `GH-8` cobrindo todos os steps do Scenario "App exibe indicador visual de modo offline". Verificar presença de elemento com texto `"Offline"` no header/nav com atributos de acessibilidade, e que o indicador some ao disparar evento `online` com `navigator.onLine = true`.
 
 **Rastreabilidade:** REQ-17 · REQ-18 · REQ-19 · Scenario: "App exibe indicador visual de modo offline"
 **Depende de:** T-41
