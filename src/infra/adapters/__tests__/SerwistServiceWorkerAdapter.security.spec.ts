@@ -242,3 +242,153 @@ describe('SerwistServiceWorkerAdapter — ST-3: Falha no download de atualizaç�
     }
   });
 });
+
+// ---------------------------------------------------------------------------
+// ST-4
+// ---------------------------------------------------------------------------
+
+/**
+ * ST-4: App não expõe erros técnicos de PWA em navegadores incompatíveis
+ *
+ * Rastreabilidade: NFR-5 · REQ-22 · T-48
+ *
+ * Vetor de ataque simulado: Reconhecimento de infraestrutura — identificar
+ * via erros expostos se o app depende de SW, quais versões, quais caches existem.
+ *
+ * Verifica que em navegadores sem suporte a Service Workers, o adapter:
+ *   - Não emite console errors ou warnings relacionados a SW
+ *   - Não expõe mensagens de erro ou fallback na UI
+ *   - Não expõe estado interno do SW, nome de cache ou versão de build
+ *     via propriedades públicas ou atributos do DOM
+ */
+describe('SerwistServiceWorkerAdapter — ST-4: App não expõe erros técnicos de PWA', () => {
+  let originalDescriptor: PropertyDescriptor | undefined;
+
+  beforeEach(() => {
+    // Remove navigator.serviceWorker para simular navegador sem suporte SW
+    originalDescriptor = Object.getOwnPropertyDescriptor(navigator, 'serviceWorker');
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    delete (navigator as any).serviceWorker;
+  });
+
+  afterEach(() => {
+    // Restaura navigator.serviceWorker original
+    if (originalDescriptor) {
+      Object.defineProperty(navigator, 'serviceWorker', originalDescriptor);
+    }
+    jest.restoreAllMocks();
+  });
+
+  /**
+   * ST-4 — Caso 1: navigator.serviceWorker ausente — zero console errors ou
+   * warnings relacionados a SW no carregamento.
+   *
+   * Quando 'serviceWorker' não está presente em navigator, a construção do
+   * adapter não deve produzir nenhum console.error ou console.warn cuja
+   * mensagem faça referência a service worker, instalação PWA ou cache.
+   */
+  it('não emite console errors ou warnings relacionados a SW sem navigator.serviceWorker', () => {
+    const consoleError = jest.spyOn(console, 'error').mockImplementation(() => {});
+    const consoleWarn = jest.spyOn(console, 'warn').mockImplementation(() => {});
+
+    const SW_RELATED_PATTERNS = [
+      /service.?worker/i,
+      /serviceworker/i,
+      /beforeinstallprompt/i,
+      /install.*prompt/i,
+      /pwa/i,
+      /sw\.js/i,
+    ];
+
+    function isSwRelated(args: unknown[]): boolean {
+      return args.some((arg) => {
+        const message = typeof arg === 'string' ? arg : String(arg);
+        return SW_RELATED_PATTERNS.some((pattern) => pattern.test(message));
+      });
+    }
+
+    new SerwistServiceWorkerAdapter();
+
+    // Coleta todas as chamadas ao console que contenham termos SW/PWA
+    const swErrors = consoleError.mock.calls.filter((args) => isSwRelated(args));
+    const swWarnings = consoleWarn.mock.calls.filter((args) => isSwRelated(args));
+
+    expect(swErrors).toHaveLength(0);
+    expect(swWarnings).toHaveLength(0);
+  });
+
+  /**
+   * ST-4 — Caso 2: beforeinstallprompt nunca disparado em navegador sem SW.
+   *
+   * Garante que a ausência do evento beforeinstallprompt não produz
+   * nenhuma mensagem de erro ou texto de fallback visível ao usuário.
+   * O adapter deve permanecer em estado silencioso sem emitir warnings
+   * ou erros sobre a falta de suporte a instalação PWA.
+   */
+  it('não exibe mensagens de erro ou fallback quando beforeinstallprompt nunca é disparado', () => {
+    const consoleError = jest.spyOn(console, 'error').mockImplementation(() => {});
+    const consoleWarn = jest.spyOn(console, 'warn').mockImplementation(() => {});
+    const consoleLog = jest.spyOn(console, 'log').mockImplementation(() => {});
+
+    const adapter = new SerwistServiceWorkerAdapter();
+
+    // Nenhum erro ou warning de console (de qualquer natureza) deve ser emitido
+    // durante a construção em ambiente sem suporte SW
+    expect(consoleError).not.toHaveBeenCalled();
+    expect(consoleWarn).not.toHaveBeenCalled();
+    expect(consoleLog).not.toHaveBeenCalled();
+
+    // isInstallAvailable retorna false sem suporte SW — sem fallback
+    expect(adapter.isInstallAvailable()).toBe(false);
+
+    // Chamar promptInstall em navegador sem suporte não deve lançar nem logar erro
+    expect(adapter.promptInstall()).resolves.toBeUndefined();
+  });
+
+  /**
+   * ST-4 — Caso 3: DOM não expõe atributos com estado interno do SW.
+   *
+   * O adapter não deve adicionar ao DOM atributos que exponham:
+   *   - Versão de build (ex: data-sw-version)
+   *   - Nome de cache (ex: data-cache-name)
+   *   - Estado interno do SW (ex: data-sw-status)
+   *
+   * NOTA: O layout.tsx da aplicação expõe `data-version` para rastreamento
+   * de deploy, controlado por variável de ambiente (NEXT_PUBLIC_BUILD_VERSION)
+   * e não está relacionado ao estado interno do Service Worker.
+   */
+  it('não adiciona atributos ao DOM que exponham estado interno do Service Worker', () => {
+    // Snapshots das propriedades do documento antes da criação do adapter
+    const bodyAttrsBefore = document.body.getAttributeNames().sort();
+    const htmlAttrsBefore = document.documentElement.getAttributeNames().sort();
+
+    const adapter = new SerwistServiceWorkerAdapter();
+
+    // O adapter não deve ter adicionado nenhum atributo ao body ou html
+    const bodyAttrsAfter = document.body.getAttributeNames().sort();
+    const htmlAttrsAfter = document.documentElement.getAttributeNames().sort();
+
+    // Nenhum atributo novo foi adicionado ao DOM
+    expect(bodyAttrsAfter).toEqual(bodyAttrsBefore);
+    expect(htmlAttrsAfter).toEqual(htmlAttrsBefore);
+
+    // Verificação explícita de que atributos SW-specific NÃO foram adicionados
+    expect(document.body.hasAttribute('data-sw-version')).toBe(false);
+    expect(document.body.hasAttribute('data-sw-status')).toBe(false);
+    expect(document.body.hasAttribute('data-cache-name')).toBe(false);
+    expect(document.documentElement.hasAttribute('data-sw-version')).toBe(false);
+
+    // O adapter não deve expor estado interno via propriedades mutáveis na instância
+    // (exceto _periodicCheckHandle e _reloadPage que são explicitamente @internal)
+    const ownKeys = Object.keys(adapter).filter(
+      (k) => k !== '_periodicCheckHandle' && k !== '_reloadPage',
+    );
+    for (const key of ownKeys) {
+      const value = (adapter as Record<string, unknown>)[key];
+      // Nenhuma propriedade interna deve conter string com padrão de cache, SW ou versão
+      if (typeof value === 'string') {
+        expect(value).not.toMatch(/cache|service.?worker|precache/i);
+      }
+    }
+  });
+});

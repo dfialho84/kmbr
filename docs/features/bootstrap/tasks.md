@@ -666,7 +666,7 @@ _Coberto por T-41 (componente reage a `isOnline = true` removendo o badge) e T-4
 
 ### T-54: Cobrir ST-1 — Cache obsoleto não persiste versão desatualizada
 
-- [ ] Implementar o teste de segurança `ST-1` verificando que ao ativar novo SW via `SKIP_WAITING`, o cache anterior é deletado via `caches.delete()` antes de servir qualquer resposta, e que assets da versão nova são servidos após ativação sem mistura com assets de versão antiga.
+- [x] Implementar o teste de segurança `ST-1` verificando que ao ativar novo SW via `SKIP_WAITING`, o cache anterior é deletado via `caches.delete()` antes de servir qualquer resposta, e que assets da versão nova são servidos após ativação sem mistura com assets de versão antiga.
 
 **Rastreabilidade:** NFR-4 · REQ-21
 **Depende de:** T-46
@@ -676,7 +676,7 @@ _Coberto por T-41 (componente reage a `isOnline = true` removendo o badge) e T-4
 
 ### T-55: Cobrir ST-2 — Crescimento irrestrito de cache não compromete storage
 
-- [ ] Implementar o teste de segurança `ST-2` verificando que o sistema aplica o limite de 50 MB e executa limpeza automática. Cobrir os casos: cache abaixo do limite (sem limpeza), cache atingindo o limite (limpeza FIFO executada), tamanho após limpeza abaixo do limite e `caches.delete()` para versões anteriores.
+- [x] Implementar o teste de segurança `ST-2` verificando que o sistema aplica o limite de 50 MB e executa limpeza automática. Cobrir os casos: cache abaixo do limite (sem limpeza), cache atingindo o limite (limpeza FIFO executada), tamanho após limpeza abaixo do limite e `caches.delete()` para versões anteriores.
 
 **Rastreabilidade:** NFR-4
 **Depende de:** T-52
@@ -686,7 +686,7 @@ _Coberto por T-41 (componente reage a `isOnline = true` removendo o badge) e T-4
 
 ### T-56: Cobrir ST-3 — Falha no download não expõe versão parcial
 
-- [ ] Implementar o teste de segurança `ST-3` verificando que em caso de download interrompido ou servidor indisponível (HTTP 5xx), o app permanece na versão anterior íntegra, nenhum asset parcial do novo build é cacheado e uma nova tentativa é realizada na sessão seguinte.
+- [x] Implementar o teste de segurança `ST-3` verificando que em caso de download interrompido ou servidor indisponível (HTTP 5xx), o app permanece na versão anterior íntegra, nenhum asset parcial do novo build é cacheado e uma nova tentativa é realizada na sessão seguinte.
 
 **Rastreabilidade:** REQ-16
 **Depende de:** T-35
@@ -698,7 +698,7 @@ _Coberto por T-41 (componente reage a `isOnline = true` removendo o badge) e T-4
 
 ### T-57: Cobrir ST-4 — App não expõe erros técnicos de PWA em navegadores incompatíveis
 
-- [ ] Implementar o teste de segurança `ST-4` verificando que em navegadores sem suporte a Service Workers, zero console errors ou warnings relacionados a SW são emitidos, nenhuma mensagem de erro ou fallback visível aparece na UI, e o DOM não contém atributos que exponham versão de build, nome de cache ou estado interno do SW.
+- [x] Implementar o teste de segurança `ST-4` verificando que em navegadores sem suporte a Service Workers, zero console errors ou warnings relacionados a SW são emitidos, nenhuma mensagem de erro ou fallback visível aparece na UI, e o DOM não contém atributos que exponham versão de build, nome de cache ou estado interno do SW.
 
 **Rastreabilidade:** NFR-5 · REQ-22
 **Depende de:** T-48
