@@ -418,7 +418,7 @@ _Coberto por T-25 (activateUpdate preserva sessão via cookie/token existente) e
 
 ### T-34: Configurar estratégia de cache Serwist — network-first para assets dinâmicos
 
-- [ ] Configurar o Serwist para aplicar a estratégia network-first para assets dinâmicos (HTML, endpoints de dados). A estratégia deve tentar a rede primeiro e cair para o cache em caso de falha de conectividade.
+- [x] Configurar o Serwist para aplicar a estratégia network-first para assets dinâmicos (HTML, endpoints de dados). A estratégia deve tentar a rede primeiro e cair para o cache em caso de falha de conectividade.
 
 **Rastreabilidade:** REQ-14 · REQ-17 · REQ-21 · NFR-3
 **Depende de:** T-03

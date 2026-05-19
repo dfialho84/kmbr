@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Arquivos de teste Cypress — lint cobrido pelo cypress/eslint-plugin-cypress
+    "cypress/**",
   ]),
 ]);
 
