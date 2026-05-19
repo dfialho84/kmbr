@@ -440,7 +440,7 @@ _Coberto por T-25 (activateUpdate dispara reload somente após confirmação exp
 
 ### T-35: Implementar tratamento silencioso de falha no download de atualização
 
-- [ ] Garantir que falhas no download de novo build pelo `SerwistServiceWorkerAdapter` (erros de rede, HTTP 5xx) sejam tratadas sem propagar mensagens técnicas à UI e sem corromper o cache existente. A versão anterior deve permanecer íntegra e uma nova tentativa deve ocorrer na próxima sessão.
+- [x] Garantir que falhas no download de novo build pelo `SerwistServiceWorkerAdapter` (erros de rede, HTTP 5xx) sejam tratadas sem propagar mensagens técnicas à UI e sem corromper o cache existente. A versão anterior deve permanecer íntegra e uma nova tentativa deve ocorrer na próxima sessão.
 
 **Rastreabilidade:** REQ-16
 **Depende de:** T-18 · T-33

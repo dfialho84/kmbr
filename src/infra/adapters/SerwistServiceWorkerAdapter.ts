@@ -193,6 +193,11 @@ export class SerwistServiceWorkerAdapter implements IInstallPort, IUpdatePort {
           newSW.addEventListener('statechange', () => {
             if (newSW.state === 'installed' && navigator.serviceWorker.controller) {
               this.handleWaitingSW(newSW);
+            } else if (newSW.state === 'redundant') {
+              // Download falhou ou foi substituído por versão mais nova.
+              // Nenhum asset parcial foi persistido — o SW em 'redundant' é descartado
+              // pelo navegador automaticamente, mantendo o cache da versão anterior íntegro.
+              // Não propaga erro à UI (REQ-16 · T-35).
             }
           });
         });
