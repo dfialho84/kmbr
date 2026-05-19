@@ -454,7 +454,7 @@ _Coberto por T-25 (activateUpdate dispara reload somente após confirmação exp
 
 ### T-36: Definir interface INetworkPort
 
-- [ ] Criar a interface TypeScript `INetworkPort` na camada Domain. Deve declarar `isOnline(): boolean` e `onStatusChange(callback: (online: boolean) => void): void`. Nenhuma dependência de Web API deve ser importada na interface.
+- [x] Criar a interface TypeScript `INetworkPort` na camada Domain. Deve declarar `isOnline(): boolean` e `onStatusChange(callback: (online: boolean) => void): void`. Nenhuma dependência de Web API deve ser importada na interface.
 
 **Rastreabilidade:** REQ-17 · REQ-18 · REQ-19
 **Depende de:** —
